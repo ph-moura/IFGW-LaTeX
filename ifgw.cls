@@ -4,17 +4,19 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions
-\LoadClass{book}
+\LoadClass[a4paper, 12pt]{book}
 
 \RequirePackage{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{setspace}
 
 \geometry{%
-	top=2cm,
+	top=3cm,
 	bottom=2cm,
 	right=2cm,
 	left=3cm,
 	includehead,
-	includefoot,
+	% includefoot,
 }
 
 \linespread{1.5}
@@ -23,19 +25,117 @@
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
 
+\def\cleardoublepage{\clearpage
+	\if@twoside
+		\ifodd 
+			\c@page
+		\else
+			\vspace*{\fill}
+			\thispagestyle{empty}
+			\newpage
+			\if@twocolumn\hbox{}\newpage\fi
+		\fi
+	\fi
+}
+
+\newcommand{\theyear}{\the\year}
+
+\newcommand{\thetitle}{}
+\let\oldtitle\title           
+\renewcommand{\title}[1]{%   
+	\oldtitle{#1}%
+	\renewcommand{\thetitle}{#1}
+}
+
+\newcommand{\theauthor}{}
+\let\oldauthor\author
+\renewcommand{\author}[1]{%
+	\oldauthor{#1}%
+	\renewcommand{\theauthor}{#1}
+}
+
+\newcommand{\theinstitute}{}
+\newcommand{\institute}[1]{%
+	\renewcommand{\theinstitute}{#1}
+}
+
+\newcommand{\theuniversity}{}
+\newcommand{\university}[1]{%
+	\renewcommand{\theuniversity}{#1}
+}
+
+\newcommand{\theadvisor}{}
+\newcommand{\theadvisorname}{Advisor}
+\newcommand{\advisor}[2][Advisor]{%
+	\renewcommand{\theadvisorname}{#1}
+	\renewcommand{\theadvisor}{#2}
+}
+
+\newcommand{\thecoadvisor}{}
+\newcommand{\thecoadvisorname}{}
+\newcommand{\coadvisor}[2][Co-advisor]{%
+	\renewcommand{\thecoadvisorname}{#1}
+	\renewcommand{\thecoadvisor}{#2}
+}
+
+\newcommand{\thelocation}{}
+\newcommand{\location}[1]{%
+	\renewcommand{\thelocation}{#1}
+}
+
+\newcommand{\thefacepagetext}{}
+\newcommand{\facepagetext}[1]{
+	\renewcommand{\thefacepagetext}{#1}
+}
+
+\newcommand{\thelogo}{}
+\newcommand{\logo}[1]{%
+	\renewcommand{\thelogo}{\includegraphics[width=2cm]{#1}}
+}
+
 \renewcommand{\maketitle}{%
 	\thispagestyle{empty}
 	\begin{center}
+		\if\thelogo\@empty\relax\else\thelogo\fi
+		\vfil 
+		\if\theuniversity\@empty\relax\else\MakeUppercase{\theuniversity}\fi 
+		\vfil
+		\if\theinstitute\@empty\relax\else\theinstitute\fi
+		\vskip.15\textwidth
+		\if\theauthor\@empty\relax\else\MakeUppercase{\theauthor}\fi
+		\vskip.15\textwidth
+		\if\thetitle\@empty\relax\else\MakeUppercase{\bfseries\thetitle}\fi
 		\vfill
-		{\Huge\@title}\par
 		\vfill
-		{\large\@author}\par
+		\if\thelocation\@empty\relax\else\MakeUppercase{\thelocation \\~ \the\year}\fi
 	\end{center}
 }
 
+\newcommand{\facepage}{
+	\cleardoublepage
+	\thispagestyle{empty}
+	\begin{center}
+		\if\theauthor\@empty\relax\else\MakeUppercase{\theauthor}\fi
+		\vskip.15\textwidth
+		\if\thetitle\@empty\relax\else\MakeUppercase{\bfseries\thetitle}\fi
+		\vfill
+		\hspace*{7.5cm}
+		\begin{minipage}{8.5cm}
+			\if\thefacepagetext\@empty\relax\else\thefacepagetext\fi
+			\vskip\baselineskip
+			\if\theadvisor\@empty\relax\else\theadvisorname:~\theadvisor\fi
+			\vfill
+			\if\thecoadvisor\@empty\relax\else\thecoadvisorname:~\thecoadvisor\fi
+		\end{minipage}
+		\vfill
+		\if\thelocation\@empty\relax\else\MakeUppercase{\thelocation \\~ \the\year}\fi
+	\end{center}
+	\newpage
+}
+
 \def\ps@headings{%
-	\def\@evenhead{\vbox{\thepage\hfill\rightmark\vskip\p@\rule{\textwidth}{\p@}}}
-	\def\@oddhead{\vbox{\leftmark\hfill\thepage\vskip\p@\rule{\textwidth}{\p@}}}
+	\def\@evenhead{\vbox{\thepage\hfill\rightmark\vskip.75\p@\hrule\relax}}
+	\def\@oddhead{\vbox{\leftmark\hfill\thepage\vskip.75\p@\hrule\relax}}
 	\let\@oddfoot\@empty\let\@evenfoot\@empty
 	\let\@mkboth\markboth
 }
@@ -46,16 +146,19 @@
     \def\@evenhead{{\thepage\hfill}}
 }
 
-\def\ps@myheadings{\ps@plain}
+\def\ps@myheadings{\ps@headings}
 
-\def\ps@frontheadigs{%
+\def\ps@frontheadings{%
     \let\@oddhead\@empty\let\@evenhead\@empty
     \def\@oddfoot{{\hfil\thepage\hfil}}
     \def\@evenfoot{{\hfil\thepage\hfil}}
 }
 
+\def\ps@frontheadings{\ps@empty}
+\pagestyle{frontheadings}
+
 \let\oldfrontmatter\frontmatter
-\renewcommand\frontmatter{\oldfrontmatter\pagestyle{frontheadigs}}
+\renewcommand\frontmatter{\oldfrontmatter\pagestyle{frontheadings}}
 \let\oldmainmatter\mainmatter
 \renewcommand\mainmatter{\oldmainmatter\pagestyle{headings}}
 
@@ -67,27 +170,38 @@
 		\linespread{1}\selectfont{\sc\huge\bfseries #1\par\nobreak}
 	\end{flushleft}
 	\vskip 5\p@ \rule{\textwidth}{1.5\p@}\vskip 35\p@
+	\pagestyle{headings}
 }
 
 \def\@makeschapterhead#1{%
+	\cleardoublepage
 	\vspace*{20\p@}
-	\thispagestyle{plain}
+	\thispagestyle{frontheadings}
 	\begin{flushleft}
 		\linespread{1}\selectfont{\sc\Huge\bfseries #1\par\nobreak}
 	\end{flushleft}
 	\vskip 30\p@
 }
 
-\newenvironment{abstract}[1][Abstract]{%
-	\chapter*{#1}
-	\thispagestyle{frontheadigs}
-	\addcontentsline{toc}{chapter}{#1}
-	\@mkboth{#1}{}
+\newcommand{\theabstractname}{Abstract}
+\newcommand\abstractname[1]{
+	\renewcommand{\theabstractname}{#1}
 }
-{}
 
-\let\oldtableofcontents\tableofcontents
-\renewcommand{\tableofcontents}{\oldtableofcontents\thispagestyle{frontheadigs}}
+\newenvironment{abstract}[1][]{%
+	\chapter*{\theabstractname}
+	\thispagestyle{frontheadings}
+	\addcontentsline{toc}{chapter}{\theabstractname}
+	\@mkboth{\theabstractname}{}
+	\renewcommand{\theabstractname}{Abstract}
+	\pagestyle{frontheadings}
+	\begin{singlespace}
+		\noindent #1
+	\end{singlespace}
+	\vskip\baselineskip
+	\noindent
+}
+{ }
 
 \newcommand{\bra}[1]{\left\langle#1\right|}
 \newcommand{\ket}[1]{\left|#1\right\rangle}
