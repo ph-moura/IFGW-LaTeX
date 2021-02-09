@@ -6,9 +6,11 @@
 \ProcessOptions
 \LoadClass[a4paper, 12pt]{book}
 
+\RequirePackage[T1]{fontenc}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
+\RequirePackage{xkeyval}
 
 \geometry{%
 	top=3cm,
@@ -20,7 +22,13 @@
 }
 
 \linespread{1.5}
-\parindent1.5em
+% \parindent1.5em
+\parindent2em
+
+\AtBeginDocument{
+	\def\captionfont{\small}
+	\pagestyle{frontheadings}
+}
 
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
@@ -64,18 +72,18 @@
 	\renewcommand{\theuniversity}{#1}
 }
 
-\newcommand{\theadvisor}{}
-\newcommand{\theadvisorname}{Advisor}
-\newcommand{\advisor}[2][Advisor]{%
-	\renewcommand{\theadvisorname}{#1}
-	\renewcommand{\theadvisor}{#2}
+\newcommand{\thesupervisor}{}
+\newcommand{\thesupervisorname}{Supervisor}
+\newcommand{\supervisor}[2][Supervisor]{%
+	\renewcommand{\thesupervisorname}{#1}
+	\renewcommand{\thesupervisor}{#2}
 }
 
-\newcommand{\thecoadvisor}{}
-\newcommand{\thecoadvisorname}{}
-\newcommand{\coadvisor}[2][Co-advisor]{%
-	\renewcommand{\thecoadvisorname}{#1}
-	\renewcommand{\thecoadvisor}{#2}
+\newcommand{\thecosupervisor}{}
+\newcommand{\thecosupervisorname}{}
+\newcommand{\cosupervisor}[2][Co-supervisor]{%
+	\renewcommand{\thecosupervisorname}{#1}
+	\renewcommand{\thecosupervisor}{#2}
 }
 
 \newcommand{\thelocation}{}
@@ -87,16 +95,27 @@
 \newcommand{\facepagetext}[1]{
 	\renewcommand{\thefacepagetext}{#1}
 }
+\def\logo@align@center{center}
+\def\logo@align@left{flushleft}
+\def\logo@align@right{flushright}
+\newlength{\logo@width}
+
+\define@key{logo}{width}[2cm]{\setlength\logo@width{#1}}
+\define@key{logo}{align}{\def\logo@align{\csname logo@align@#1\endcsname}}
+\setkeys{logo}{align=center, width=2cm}
 
 \newcommand{\thelogo}{}
-\newcommand{\logo}[1]{%
-	\renewcommand{\thelogo}{\includegraphics[width=2cm]{#1}}
+\newcommand{\logo}[2][]{
+	\setkeys{logo}{#1}
+	\renewcommand{\thelogo}{\includegraphics[width=\logo@width]{#2}}
 }
 
 \renewcommand{\maketitle}{%
 	\thispagestyle{empty}
+	\begin{\logo@align}
+		\if\thelogo\@empty\relax\else\centering\thelogo\fi
+	\end{\logo@align}
 	\begin{center}
-		\if\thelogo\@empty\relax\else\thelogo\fi
 		\vfil 
 		\if\theuniversity\@empty\relax\else\MakeUppercase{\theuniversity}\fi 
 		\vfil
@@ -123,9 +142,9 @@
 		\begin{minipage}{8.5cm}
 			\if\thefacepagetext\@empty\relax\else\thefacepagetext\fi
 			\vskip\baselineskip
-			\if\theadvisor\@empty\relax\else\theadvisorname:~\theadvisor\fi
+			\if\thesupervisor\@empty\relax\else\thesupervisorname:~\thesupervisor\fi
 			\vfill
-			\if\thecoadvisor\@empty\relax\else\thecoadvisorname:~\thecoadvisor\fi
+			\if\thecosupervisor\@empty\relax\else\thecosupervisorname:~\thecosupervisor\fi
 		\end{minipage}
 		\vfill
 		\if\thelocation\@empty\relax\else\MakeUppercase{\thelocation \\~ \the\year}\fi
@@ -155,7 +174,6 @@
 }
 
 \def\ps@frontheadings{\ps@empty}
-\pagestyle{frontheadings}
 
 \let\oldfrontmatter\frontmatter
 \renewcommand\frontmatter{\oldfrontmatter\pagestyle{frontheadings}}
@@ -167,7 +185,7 @@
 	{\raggedright\huge\scshape\@chapapp~\thechapter}
 	\vskip 15\p@
 	\begin{flushleft}
-		\linespread{1}\selectfont{\sc\huge\bfseries #1\par\nobreak}
+		\linespread{1}\selectfont{\huge\textbf{\textsc{#1}}\par\nobreak}
 	\end{flushleft}
 	\vskip 5\p@ \rule{\textwidth}{1.5\p@}\vskip 35\p@
 	\pagestyle{headings}
@@ -178,7 +196,7 @@
 	\vspace*{20\p@}
 	\thispagestyle{frontheadings}
 	\begin{flushleft}
-		\linespread{1}\selectfont{\sc\Huge\bfseries #1\par\nobreak}
+		\linespread{1}\selectfont{\Huge\bfseries\textsc{#1}\par\nobreak}
 	\end{flushleft}
 	\vskip 30\p@
 }

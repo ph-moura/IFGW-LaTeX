@@ -12,4 +12,4 @@ read:
 	zathura ${PROJ_NAME}.pdf &
 
 clean:
-	rm -f *.{ps,toc,log,aux,out,dvi,bbl,blg}
+	rm -f *.{ps,toc,log,lof,lot,aux,out,dvi,bbl,blg}
