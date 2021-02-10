@@ -201,31 +201,32 @@
 	\vskip 30\p@
 }
 
-\newcommand{\theabstractname}{Abstract}
-\newcommand\abstractname[1]{
-	\renewcommand{\theabstractname}{#1}
-}
+\define@key{abstract}{header}{\def\abstract@header{#1}}
+\define@key{abstract}{name}{\def\abstract@name{#1}}
+\setkeys{abstract}{name=Abstract, header=\@empty}
 
 \newenvironment{abstract}[1][]{%
-	\chapter*{\theabstractname}
+	\setkeys{abstract}{#1}
+	\chapter*{\abstract@name}
 	\thispagestyle{frontheadings}
-	\addcontentsline{toc}{chapter}{\theabstractname}
-	\@mkboth{\theabstractname}{}
-	\renewcommand{\theabstractname}{Abstract}
-	\pagestyle{frontheadings}
-	\begin{singlespace}
-		\noindent #1
-	\end{singlespace}
-	\vskip\baselineskip
-	\noindent
+	\addcontentsline{toc}{chapter}{\abstract@name}
+	\@mkboth{\abstract@name}{}
+	\if\abstract@header\@empty
+		\relax
+	\else
+		\begin{singlespace}
+			\noindent\abstract@header
+		\end{singlespace}
+	\fi
+	\noindent\break
 }
-{ }
+{\newpage}
 
 \newcommand{\bra}[1]{\left\langle#1\right|}
 \newcommand{\ket}[1]{\left|#1\right\rangle}
-\newcommand{\braket}[3][\@nil]{
+\newcommand{\braket}[3][]{
 	\def\tmp{#1}
-	\ifx\tmp\@nnil
+	\ifx\tmp\@empty
 		\left\langle#2\middle|#3\right\rangle
 	\else
 		\left\langle#2\left|#1\right|#3\right\rangle
