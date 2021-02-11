@@ -55,6 +55,21 @@
 	\renewcommand{\thetitle}{#1}
 }
 
+\newcommand{\thesubtitle}{}
+\newcommand{\subtitle}[1]{%   
+	\renewcommand{\thesubtitle}{#1}
+}
+
+\newcommand{\thesecondarytitle}{}
+\newcommand{\secondarytitle}[1]{%   
+	\renewcommand{\thesecondarytitle}{#1}
+}
+
+\newcommand{\thesecondarysubtitle}{}
+\newcommand{\secondarysubtitle}[1]{%   
+	\renewcommand{\thesecondarysubtitle}{#1}
+}
+
 \newcommand{\theauthor}{}
 \let\oldauthor\author
 \renewcommand{\author}[1]{%
@@ -91,10 +106,6 @@
 	\renewcommand{\thelocation}{#1}
 }
 
-\newcommand{\thefacepagetext}{}
-\newcommand{\facepagetext}[1]{
-	\renewcommand{\thefacepagetext}{#1}
-}
 \def\logo@align@center{center}
 \def\logo@align@left{flushleft}
 \def\logo@align@right{flushright}
@@ -110,44 +121,129 @@
 	\renewcommand{\thelogo}{\includegraphics[width=\logo@width]{#2}}
 }
 
+\def\page@logo{
+	\if\thelogo\@empty\relax
+	\else
+		\begin{\logo@align}
+			\thelogo
+		\end{\logo@align}
+	\fi
+}
+
+\def\page@title{
+	\ifx\thetitle\@empty\relax
+	\else
+		\if\thesubtitle\@empty\relax
+			\MakeUppercase{\bfseries\thetitle}
+		\else
+			{\bfseries\MakeUppercase{\thetitle}:\\\thesubtitle}
+		\fi
+		\vfill
+	\fi
+	\if\thesecondarytitle\@empty\relax
+	\else
+		\if\thesecondarysubtitle\@empty\relax
+			\MakeUppercase{\bfseries\thesecondarytitle}
+		\else
+			{\bfseries\MakeUppercase{\thesecondarytitle}:\\\thesecondarysubtitle}
+		\fi
+		\vfill
+	\fi
+	\vfill
+}
+
+\def\page@institution{
+	\if\theuniversity\@empty\relax
+	\else
+		\if\theinstitute\@empty\relax
+			{\MakeUppercase{\theuniversity}}
+		\else
+			{\MakeUppercase{\theuniversity}\\\theinstitute}
+		\fi
+		\vfill
+	\fi 
+}
+
+\def\page@author{
+	\if\theauthor\@empty\relax
+	\else
+		\MakeUppercase{\theauthor}
+		\vfill
+	\fi
+}
+\def\page@location{
+\if\thelocation\@empty\relax
+	\else
+		\MakeUppercase{\thelocation \\~ \the\year}
+	\fi
+}
+
+\define@key{backcover}{first language}{\def\backcover@first@language{#1}}
+\define@key{backcover}{second language}{\def\backcover@second@language{#1}}
+\define@key{backcover}{version text}{\def\backcover@version@text{#1}}
+
+\setkeys{backcover}{first language=\@empty, second language=\@empty, version text=\@empty}
+
+
+\def\page@text{
+	\hspace*{7.5cm}
+	\begin{minipage}{8.5cm}
+		\if\backcover@first@language\@empty
+			\relax
+		\else
+			\backcover@first@language
+			\vskip\baselineskip
+		\fi
+		\if\backcover@second@language\@empty
+			\relax
+		\else
+			\backcover@second@language
+		\fi
+	\end{minipage}
+	\vfill
+}
+
+\def\page@version@text{
+	\begin{minipage}{8.5cm}
+		\if\backcover@version@text\@empty\relax
+		\else
+			\if\thesupervisor\@empty\relax
+			\else
+				{\bfseries\thesupervisorname:~\thesupervisor\relax}\\
+			\fi
+			\if\thecosupervisor\@empty\relax
+			\else
+				{\bfseries\thecosupervisorname:~\thecosupervisor\relax}\\
+			\fi
+			\backcover@version@text
+		\fi
+	\end{minipage}
+	\vfill
+}
+
 \renewcommand{\maketitle}{%
 	\thispagestyle{empty}
-	\begin{\logo@align}
-		\if\thelogo\@empty\relax\else\centering\thelogo\fi
-	\end{\logo@align}
+	\page@logo
 	\begin{center}
-		\vfil 
-		\if\theuniversity\@empty\relax\else\MakeUppercase{\theuniversity}\fi 
-		\vfil
-		\if\theinstitute\@empty\relax\else\theinstitute\fi
-		\vskip.15\textwidth
-		\if\theauthor\@empty\relax\else\MakeUppercase{\theauthor}\fi
-		\vskip.15\textwidth
-		\if\thetitle\@empty\relax\else\MakeUppercase{\bfseries\thetitle}\fi
-		\vfill
-		\vfill
-		\if\thelocation\@empty\relax\else\MakeUppercase{\thelocation \\~ \the\year}\fi
+		\page@institution
+		\page@author
+		\page@title	
+		\page@location	
 	\end{center}
 }
 
-\newcommand{\facepage}{
+\newcommand{\backcover}[1]{
+	\setkeys{backcover}{#1}
 	\cleardoublepage
 	\thispagestyle{empty}
 	\begin{center}
-		\if\theauthor\@empty\relax\else\MakeUppercase{\theauthor}\fi
-		\vskip.15\textwidth
-		\if\thetitle\@empty\relax\else\MakeUppercase{\bfseries\thetitle}\fi
-		\vfill
-		\hspace*{7.5cm}
-		\begin{minipage}{8.5cm}
-			\if\thefacepagetext\@empty\relax\else\thefacepagetext\fi
-			\vskip\baselineskip
-			\if\thesupervisor\@empty\relax\else\thesupervisorname:~\thesupervisor\fi
-			\vfill
-			\if\thecosupervisor\@empty\relax\else\thecosupervisorname:~\thecosupervisor\fi
-		\end{minipage}
-		\vfill
-		\if\thelocation\@empty\relax\else\MakeUppercase{\thelocation \\~ \the\year}\fi
+		\page@author
+		\page@title	
+		\page@text
+	\end{center}
+	\page@version@text
+	\begin{center}
+		\page@location	
 	\end{center}
 	\newpage
 }
@@ -226,7 +322,7 @@
 \newcommand{\ket}[1]{\left|#1\right\rangle}
 \newcommand{\braket}[3][]{
 	\def\tmp{#1}
-	\ifx\tmp\@empty
+	\ifx\tmp\@empty\relax
 		\left\langle#2\middle|#3\right\rangle
 	\else
 		\left\langle#2\left|#1\right|#3\right\rangle
