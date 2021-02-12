@@ -174,7 +174,7 @@
 \def\page@location{
 \if\thelocation\@empty\relax
 	\else
-		\MakeUppercase{\thelocation \\~ \the\year}
+		\MakeUppercase{\thelocation\\\the\year}
 	\fi
 }
 
@@ -228,8 +228,10 @@
 		\page@institution
 		\page@author
 		\page@title	
+		\vfill
 		\page@location	
 	\end{center}
+	\newpage
 }
 
 \newcommand{\backcover}[1]{
@@ -276,25 +278,37 @@
 \let\oldmainmatter\mainmatter
 \renewcommand\mainmatter{\oldmainmatter\pagestyle{headings}}
 
-\def\@makechapterhead#1{%
-	\vspace*{20\p@}
-	{\raggedright\huge\scshape\@chapapp~\thechapter}
-	\vskip 15\p@
-	\begin{flushleft}
-		\linespread{1}\selectfont{\huge\textbf{\textsc{#1}}\par\nobreak}
-	\end{flushleft}
-	\vskip 5\p@ \rule{\textwidth}{1.5\p@}\vskip 35\p@
-	\pagestyle{headings}
+\renewcommand\chapter{%
+	\@ifstar\ifgw@chapter@star\ifgw@chapter
 }
 
-\def\@makeschapterhead#1{%
+\newcommand\ifgw@chapter[1]{
+	\cleardoublepage
+	\pagestyle{headings}
+	\thispagestyle{plain}
+	\refstepcounter{chapter}
+	\addcontentsline{toc}{chapter}{\sc\bfseries\thechapter.~#1}
+	\@mkboth{\thechapter.~#1}{}
+	\vspace*{20\p@}
+	{\raggedright \huge\scshape\@chapapp~\thechapter}
+	\vskip 25\p@
+	\begin{flushleft}
+		\linespread{2}\selectfont{\huge\bfseries\scshape#1}
+		\rule{\textwidth}{1.5\p@}
+	\end{flushleft}
+	\vskip 30\p@
+	\par
+}
+
+\providecommand\ifgw@chapter@star[1]{
 	\cleardoublepage
 	\vspace*{20\p@}
 	\thispagestyle{frontheadings}
 	\begin{flushleft}
-		\linespread{1}\selectfont{\Huge\bfseries\textsc{#1}\par\nobreak}
+		\linespread{2}\selectfont{\huge\bfseries\scshape#1}
 	\end{flushleft}
 	\vskip 30\p@
+	\par
 }
 
 \define@key{abstract}{header}{\def\abstract@header{#1}}
@@ -305,7 +319,7 @@
 	\setkeys{abstract}{#1}
 	\chapter*{\abstract@name}
 	\thispagestyle{frontheadings}
-	\addcontentsline{toc}{chapter}{\abstract@name}
+	\addcontentsline{toc}{chapter}{\bfseries\scshape\abstract@name}
 	\@mkboth{\abstract@name}{}
 	\if\abstract@header\@empty
 		\relax
@@ -318,6 +332,18 @@
 }
 {\newpage}
 
+\providecommand{\epigraph}[2]{
+	\cleardoublepage
+	\vspace*{\fill}
+	\hspace*{7.5cm}
+	\begin{minipage}{8.5cm}
+		\onehalfspacing{\it``#2''}
+		\\~
+		\hspace*{\fill}{\it#1}
+	\end{minipage}
+	\newpage
+}
+
 \newcommand{\bra}[1]{\left\langle#1\right|}
 \newcommand{\ket}[1]{\left|#1\right\rangle}
 \newcommand{\braket}[3][]{
@@ -325,7 +351,7 @@
 	\ifx\tmp\@empty\relax
 		\left\langle#2\middle|#3\right\rangle
 	\else
-		\left\langle#2\left|#1\right|#3\right\rangle
+		\left\langle#2\middle|#1\middle|#3\right\rangle
 	\fi
 }
 
