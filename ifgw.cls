@@ -21,13 +21,15 @@
 	% includefoot,
 }
 
-\linespread{1.5}
-% \parindent1.5em
-\parindent2em
 
 \AtBeginDocument{
 	\def\captionfont{\small}
 	\pagestyle{frontheadings}
+	% \linespread{1.5}
+	% \parindent1.5em
+	% \setlength{\parskip}{1em}
+	\parindent2em
+	\onehalfspacing
 }
 
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
@@ -171,6 +173,7 @@
 		\vfill
 	\fi
 }
+
 \def\page@location{
 \if\thelocation\@empty\relax
 	\else
@@ -184,10 +187,10 @@
 
 \setkeys{backcover}{first language=\@empty, second language=\@empty, version text=\@empty}
 
-
 \def\page@text{
 	\hspace*{7.5cm}
 	\begin{minipage}{8.5cm}
+		\singlespacing
 		\if\backcover@first@language\@empty
 			\relax
 		\else
@@ -205,6 +208,7 @@
 
 \def\page@version@text{
 	\begin{minipage}{8.5cm}
+		\singlespacing
 		\if\backcover@version@text\@empty\relax
 		\else
 			\if\thesupervisor\@empty\relax
@@ -300,7 +304,7 @@
 	\par
 }
 
-\providecommand\ifgw@chapter@star[1]{
+\newcommand\ifgw@chapter@star[1]{
 	\cleardoublepage
 	\vspace*{20\p@}
 	\thispagestyle{frontheadings}
@@ -324,23 +328,35 @@
 	\if\abstract@header\@empty
 		\relax
 	\else
-		\begin{singlespace}
-			\noindent\abstract@header
-		\end{singlespace}
+		{\singlespacing\noindent\abstract@header}
 	\fi
 	\noindent\break
 }
+	\onehalfspacing
 {\newpage}
 
-\providecommand{\epigraph}[2]{
+\newcommand{\epigraph}[2]{
 	\cleardoublepage
 	\vspace*{\fill}
-	\hspace*{7.5cm}
-	\begin{minipage}{8.5cm}
-		\onehalfspacing{\it``#2''}
-		\\~
-		\hspace*{\fill}{\it#1}
-	\end{minipage}
+	\begin{flushright}
+		\begin{minipage}{8.5cm}
+			{\it``#2''}\\
+			{\hspace*{\fill}\it#1}
+		\end{minipage}
+	\end{flushright}
+	\break
+	\newpage
+}
+
+\newcommand{\dedication}[1]{
+	\cleardoublepage
+	\vspace*{\fill}
+	\begin{flushright}
+		\begin{minipage}{7cm}
+			{\it#1}
+		\end{minipage}
+	\end{flushright}
+	\break
 	\newpage
 }
 
