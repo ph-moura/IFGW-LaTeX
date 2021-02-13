@@ -9,6 +9,7 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
+\usepackage{hyperref}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
 
@@ -35,6 +36,12 @@
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
 
+\let\oldbibliography\bibliography
+\renewcommand{\bibliography}[1]{
+	\oldbibliography{#1}
+	\addcontentsline{toc}{chapter}{\bfseries\scshape\bibname}
+}
+
 \def\cleardoublepage{\clearpage
 	\if@twoside
 		\ifodd 
@@ -51,25 +58,17 @@
 \newcommand{\theyear}{\the\year}
 
 \newcommand{\thetitle}{}
-\let\oldtitle\title           
-\renewcommand{\title}[1]{%   
-	\oldtitle{#1}%
-	\renewcommand{\thetitle}{#1}
+\newcommand{\thesecondarytitle}{}
+\renewcommand{\title}[2][]{
+	\renewcommand{\thesecondarytitle}{#1}
+	\renewcommand{\thetitle}{#2}
 }
 
 \newcommand{\thesubtitle}{}
-\newcommand{\subtitle}[1]{%   
-	\renewcommand{\thesubtitle}{#1}
-}
-
-\newcommand{\thesecondarytitle}{}
-\newcommand{\secondarytitle}[1]{%   
-	\renewcommand{\thesecondarytitle}{#1}
-}
-
 \newcommand{\thesecondarysubtitle}{}
-\newcommand{\secondarysubtitle}[1]{%   
+\newcommand{\subtitle}[2][]{%   
 	\renewcommand{\thesecondarysubtitle}{#1}
+	\renewcommand{\thesubtitle}{#2}
 }
 
 \newcommand{\theauthor}{}
@@ -80,32 +79,36 @@
 }
 
 \newcommand{\theinstitute}{}
-\newcommand{\institute}[1]{%
-	\renewcommand{\theinstitute}{#1}
+\newcommand{\thesecondaryinstitute}{}
+\newcommand{\institute}[2][]{%
+	\renewcommand{\theinstitute}{#2}
+	\renewcommand{\thesecondaryinstitute}{#1}
 }
 
 \newcommand{\theuniversity}{}
-\newcommand{\university}[1]{%
-	\renewcommand{\theuniversity}{#1}
+\newcommand{\thesecondaryuniversity}{}
+\newcommand{\university}[2][]{%
+	\renewcommand{\theuniversity}{#2}
+	\renewcommand{\thesecondaryuniversity}{#1}
 }
 
 \newcommand{\thesupervisor}{}
-\newcommand{\thesupervisorname}{Supervisor}
+\newcommand{\supervisorname}{Supervisor}
 \newcommand{\supervisor}[2][Supervisor]{%
-	\renewcommand{\thesupervisorname}{#1}
+	\renewcommand{\supervisorname}{#1}
 	\renewcommand{\thesupervisor}{#2}
 }
 
 \newcommand{\thecosupervisor}{}
-\newcommand{\thecosupervisorname}{}
+\newcommand{\cosupervisorname}{}
 \newcommand{\cosupervisor}[2][Co-supervisor]{%
-	\renewcommand{\thecosupervisorname}{#1}
+	\renewcommand{\cosupervisorname}{#1}
 	\renewcommand{\thecosupervisor}{#2}
 }
 
-\newcommand{\thelocation}{}
-\newcommand{\location}[1]{%
-	\renewcommand{\thelocation}{#1}
+\newcommand{\thecity}{}
+\newcommand{\city}[1]{%
+	\renewcommand{\thecity}{#1}
 }
 
 \def\logo@align@center{center}
@@ -115,7 +118,7 @@
 
 \define@key{logo}{width}[2cm]{\setlength\logo@width{#1}}
 \define@key{logo}{align}{\def\logo@align{\csname logo@align@#1\endcsname}}
-\setkeys{logo}{align=center, width=2cm}
+\setkeys{logo}{align=left, width=1.5cm}
 
 \newcommand{\thelogo}{}
 \newcommand{\logo}[2][]{
@@ -136,18 +139,18 @@
 	\ifx\thetitle\@empty\relax
 	\else
 		\if\thesubtitle\@empty\relax
-			\MakeUppercase{\bfseries\thetitle}
+			\MakeUppercase{\thetitle}
 		\else
-			{\bfseries\MakeUppercase{\thetitle}:\\\thesubtitle}
+			{\MakeUppercase{\thetitle}:\\\thesubtitle}
 		\fi
 		\vfill
 	\fi
 	\if\thesecondarytitle\@empty\relax
 	\else
 		\if\thesecondarysubtitle\@empty\relax
-			\MakeUppercase{\bfseries\thesecondarytitle}
+			\MakeUppercase{\thesecondarytitle}
 		\else
-			{\bfseries\MakeUppercase{\thesecondarytitle}:\\\thesecondarysubtitle}
+			{\MakeUppercase{\thesecondarytitle}:\\\thesecondarysubtitle}
 		\fi
 		\vfill
 	\fi
@@ -174,10 +177,10 @@
 	\fi
 }
 
-\def\page@location{
-\if\thelocation\@empty\relax
+\def\page@city{
+\if\thecity\@empty\relax
 	\else
-		\MakeUppercase{\thelocation\\\the\year}
+		\MakeUppercase{\thecity\\\the\year}
 	\fi
 }
 
@@ -185,7 +188,15 @@
 \define@key{backcover}{second language}{\def\backcover@second@language{#1}}
 \define@key{backcover}{version text}{\def\backcover@version@text{#1}}
 
-\setkeys{backcover}{first language=\@empty, second language=\@empty, version text=\@empty}
+\setkeys{backcover}{	
+	first language=\@empty, 
+	second language=\@empty, 
+	version text=\@empty
+}
+
+\newcommand{\backcover}[1]{
+	\setkeys{backcover}{#1}
+}
 
 \def\page@text{
 	\hspace*{7.5cm}
@@ -211,18 +222,21 @@
 		\singlespacing
 		\if\backcover@version@text\@empty\relax
 		\else
-			\if\thesupervisor\@empty\relax
-			\else
-				{\bfseries\thesupervisorname:~\thesupervisor\relax}\\
-			\fi
-			\if\thecosupervisor\@empty\relax
-			\else
-				{\bfseries\thecosupervisorname:~\thecosupervisor\relax}\\
-			\fi
-			\backcover@version@text
+		\MakeUppercase{\backcover@version@text}
 		\fi
 	\end{minipage}
 	\vfill
+}
+
+\def\page@supervisor{
+	\if\thesupervisor\@empty\relax
+	\else
+		{\supervisorname:~\MakeUppercase{\thesupervisor\relax}}\\
+	\fi
+	\if\thecosupervisor\@empty\relax
+	\else
+		{\cosupervisorname:~\MakeUppercase{\thecosupervisor\relax}}\\
+	\fi
 }
 
 \renewcommand{\maketitle}{%
@@ -233,13 +247,12 @@
 		\page@author
 		\page@title	
 		\vfill
-		\page@location	
+		\page@city	
 	\end{center}
 	\newpage
 }
 
-\newcommand{\backcover}[1]{
-	\setkeys{backcover}{#1}
+\newcommand{\makebackcover}{
 	\cleardoublepage
 	\thispagestyle{empty}
 	\begin{center}
@@ -247,9 +260,10 @@
 		\page@title	
 		\page@text
 	\end{center}
+	\page@supervisor
 	\page@version@text
 	\begin{center}
-		\page@location	
+		\page@city	
 	\end{center}
 	\newpage
 }
@@ -286,31 +300,41 @@
 	\@ifstar\ifgw@chapter@star\ifgw@chapter
 }
 
-\newcommand\ifgw@chapter[1]{
+\newlength{\chapterrulewidth}
+\setlength{\chapterrulewidth}{1.5\p@}
+
+\newcommand{\ifgw@chapter}[2][]{
 	\cleardoublepage
 	\pagestyle{headings}
 	\thispagestyle{plain}
 	\refstepcounter{chapter}
-	\addcontentsline{toc}{chapter}{\sc\bfseries\thechapter.~#1}
-	\@mkboth{\thechapter.~#1}{}
-	\vspace*{20\p@}
-	{\raggedright \huge\scshape\@chapapp~\thechapter}
-	\vskip 25\p@
-	\begin{flushleft}
-		\linespread{2}\selectfont{\huge\bfseries\scshape#1}
-		\rule{\textwidth}{1.5\p@}
-	\end{flushleft}
+	\def\chtext{#1}
+	\ifx\chtext\@empty\relax\renewcommand{\chtext}{#2}\fi
+	\addcontentsline{toc}{chapter}{\sc\bfseries\thechapter.~#2}
+	\@mkboth{\thechapter.~\chtext}{}
+	\begingroup
+		% \vspace*{20\p@}
+		\selectfont\huge\scshape\noindent\@chapapp~\thechapter
+		\vskip\baselineskip
+		\linespread{1.5}\noindent{\bfseries#2}
+		\vskip5\p@
+		\noindent\rule{\textwidth}{\chapterrulewidth}
+	\endgroup
 	\vskip 30\p@
 	\par
 }
 
+\newcounter{chapterstar}
 \newcommand\ifgw@chapter@star[1]{
 	\cleardoublepage
-	\vspace*{20\p@}
+	\@mkboth{}{}
 	\thispagestyle{frontheadings}
-	\begin{flushleft}
-		\linespread{2}\selectfont{\huge\bfseries\scshape#1}
-	\end{flushleft}
+	\begingroup
+		% \vspace*{20\p@}
+		\selectfont\huge\bfseries\scshape
+		\linespread{1.5}\noindent#1
+	\endgroup
+	\refstepcounter{chapterstar}
 	\vskip 30\p@
 	\par
 }
@@ -344,8 +368,7 @@
 			{\hspace*{\fill}\it#1}
 		\end{minipage}
 	\end{flushright}
-	\break
-	\newpage
+	\break\newpage
 }
 
 \newcommand{\dedication}[1]{
@@ -356,8 +379,7 @@
 			{\it#1}
 		\end{minipage}
 	\end{flushright}
-	\break
-	\newpage
+	\pagebreak
 }
 
 \newcommand{\bra}[1]{\left\langle#1\right|}
