@@ -6,13 +6,16 @@
 \ProcessOptions
 \LoadClass[a4paper, 12pt]{book}
 
+%>>>=============== Required Packages ===================>>>
 \RequirePackage[T1]{fontenc}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
-\usepackage{hyperref}
+\RequirePackage{hyperref}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
+%<<<=====================================================<<<
 
+%>>>=============== Page Layout =========================>>>
 \geometry{%
 	top=3cm,
 	bottom=2cm,
@@ -21,27 +24,27 @@
 	includehead,
 	% includefoot,
 }
+%<<<=====================================================<<<
 
-
+%>>>========= At Begin Document Deffinitions ============>>>
 \AtBeginDocument{
 	\def\captionfont{\small}
 	\pagestyle{frontheadings}
-	% \linespread{1.5}
-	% \parindent1.5em
 	% \setlength{\parskip}{1em}
 	\parindent2em
 	\onehalfspacing
 }
+%<<<=====================================================<<<
 
-\renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
-
+%>>>================== Bibliography =====================>>>
 \let\oldbibliography\bibliography
 \renewcommand{\bibliography}[1]{
 	\oldbibliography{#1}
 	\addcontentsline{toc}{chapter}{\bfseries\scshape\bibname}
 }
+%<<<=====================================================<<<
 
+%>>>============== Clear Doublepage =====================>>>
 \def\cleardoublepage{\clearpage
 	\if@twoside
 		\ifodd 
@@ -54,63 +57,147 @@
 		\fi
 	\fi
 }
+%<<<=====================================================<<<
 
-\newcommand{\theyear}{\the\year}
-
-\newcommand{\thetitle}{}
-\newcommand{\thesecondarytitle}{}
+%>>>============== Title and Subtitle ===================>>>
 \renewcommand{\title}[2][]{
-	\renewcommand{\thesecondarytitle}{#1}
-	\renewcommand{\thetitle}{#2}
+	\def\titlei{{#2}}
+	\def\titleii{{#1}}
 }
 
-\newcommand{\thesubtitle}{}
-\newcommand{\thesecondarysubtitle}{}
-\newcommand{\subtitle}[2][]{%   
-	\renewcommand{\thesecondarysubtitle}{#1}
-	\renewcommand{\thesubtitle}{#2}
+\title{}
+\newcommand{\thetitle}[1][]{
+	\ifx#12\relax\titleii\else\titlei\fi	
 }
 
+\newcommand{\subtitle}[2][]{
+	\def\subtitlei{{#2}}
+	\def\subtitleii{{#1}}
+}
+
+\subtitle{}
+\newcommand{\thesubtitle}[1][]{
+	\ifx#12\relax\subtitleii\else\subtitlei\fi	
+}
+
+\def\page@title{
+	\if\titlei\@empty\relax
+	\else
+		\if\subtitlei\@empty\relax
+			\MakeUppercase{\bfseries\titlei}
+		\else
+			\MakeUppercase{\bfseries\titlei:}\\\MakeUppercase{\subtitlei}
+		\fi
+		\vfill
+	\fi
+	\if\titleii\@empty\relax
+	\else
+		\if\subtitleii\@empty\relax
+			\MakeUppercase{\bfseries\titleii}
+		\else
+			\MakeUppercase{\bfseries\titleii:}\\\MakeUppercase{\subtitleii}
+		\fi
+		\vfill
+	\fi
+	\vfill
+}
+%<<<=====================================================<<<
+
+%>>>===================== Author ========================>>>
 \newcommand{\theauthor}{}
 \let\oldauthor\author
 \renewcommand{\author}[1]{%
-	\oldauthor{#1}%
-	\renewcommand{\theauthor}{#1}
+	\oldauthor{{#1}}%
+	\renewcommand{\theauthor}{{#1}}
 }
 
-\newcommand{\theinstitute}{}
-\newcommand{\thesecondaryinstitute}{}
-\newcommand{\institute}[2][]{%
-	\renewcommand{\theinstitute}{#2}
-	\renewcommand{\thesecondaryinstitute}{#1}
+\def\page@author{
+	\if\theauthor\@empty\relax
+	\else
+		\MakeUppercase{\theauthor}
+		\vfill
+	\fi
 }
+%<<<=====================================================<<<
 
-\newcommand{\theuniversity}{}
-\newcommand{\thesecondaryuniversity}{}
-\newcommand{\university}[2][]{%
-	\renewcommand{\theuniversity}{#2}
-	\renewcommand{\thesecondaryuniversity}{#1}
-}
-
+%>>>===========  Supervisor and Co-supervisor ===========>>>
 \newcommand{\thesupervisor}{}
 \newcommand{\supervisorname}{Supervisor}
 \newcommand{\supervisor}[2][Supervisor]{%
-	\renewcommand{\supervisorname}{#1}
-	\renewcommand{\thesupervisor}{#2}
+	\renewcommand{\supervisorname}{{#1}}
+	\renewcommand{\thesupervisor}{{#2}}
 }
 
 \newcommand{\thecosupervisor}{}
 \newcommand{\cosupervisorname}{}
 \newcommand{\cosupervisor}[2][Co-supervisor]{%
-	\renewcommand{\cosupervisorname}{#1}
-	\renewcommand{\thecosupervisor}{#2}
+	\renewcommand{\cosupervisorname}{{#1}}
+	\renewcommand{\thecosupervisor}{{#2}}
 }
 
+\def\page@supervisor{
+	\if\thesupervisor\@empty\relax
+	\else
+		{\supervisorname:}~{\MakeUppercase{\thesupervisor\relax}}\\
+	\fi
+	\if\thecosupervisor\@empty\relax
+	\else
+		{\cosupervisorname:}~{\MakeUppercase{\thecosupervisor\relax}}\\
+	\fi
+}
+%<<<=====================================================<<<
+
+%>>>================== Institution ======================>>>
+\newcommand{\institute}[2][]{
+	\def\institutei{{#2}}
+	\def\instituteii{{#1}}
+}
+
+\institute{}
+\newcommand{\theinstitute}[1][]{
+	\ifx#12\relax\instituteii\else\institutei\fi	
+}
+
+\newcommand{\university}[2][]{
+	\def\universityi{{#2}}
+	\def\universityii{{#1}}
+}
+
+\university{}
+\newcommand{\theuniversity}[1][]{
+	\ifx#12\relax\universityii\else\universityi\fi	
+}
+
+\def\page@institution{
+	\if\universityi\@empty\relax
+	\else
+		\if\institutei\@empty\relax
+			{\MakeUppercase{\universityi}}
+		\else
+			{\MakeUppercase{\universityi}}\\~{\institutei}
+		\fi
+		\vfill
+	\fi 
+}
+%<<<=====================================================<<<
+
+%>>>================== City and Year ====================>>>
 \newcommand{\thecity}{}
 \newcommand{\city}[1]{%
-	\renewcommand{\thecity}{#1}
+	\renewcommand{\thecity}{{#1}}
 }
 
+\newcommand{\theyear}{\the\year}
+
+\def\page@city{
+	\if\thecity\@empty\relax
+	\else
+		\MakeUppercase{\thecity\\\the\year}
+	\fi
+}
+%<<<=====================================================<<<
+
+%>>>====================== Logo =========================>>>
 \def\logo@align@center{center}
 \def\logo@align@left{flushleft}
 \def\logo@align@right{flushright}
@@ -118,7 +205,7 @@
 
 \define@key{logo}{width}[2cm]{\setlength\logo@width{#1}}
 \define@key{logo}{align}{\def\logo@align{\csname logo@align@#1\endcsname}}
-\setkeys{logo}{align=left, width=1.5cm}
+\setkeys{logo}{align=left, width=2cm}
 
 \newcommand{\thelogo}{}
 \newcommand{\logo}[2][]{
@@ -134,56 +221,9 @@
 		\end{\logo@align}
 	\fi
 }
+%<<<=====================================================<<<
 
-\def\page@title{
-	\ifx\thetitle\@empty\relax
-	\else
-		\if\thesubtitle\@empty\relax
-			\MakeUppercase{\thetitle}
-		\else
-			{\MakeUppercase{\thetitle}:\\\thesubtitle}
-		\fi
-		\vfill
-	\fi
-	\if\thesecondarytitle\@empty\relax
-	\else
-		\if\thesecondarysubtitle\@empty\relax
-			\MakeUppercase{\thesecondarytitle}
-		\else
-			{\MakeUppercase{\thesecondarytitle}:\\\thesecondarysubtitle}
-		\fi
-		\vfill
-	\fi
-	\vfill
-}
-
-\def\page@institution{
-	\if\theuniversity\@empty\relax
-	\else
-		\if\theinstitute\@empty\relax
-			{\MakeUppercase{\theuniversity}}
-		\else
-			{\MakeUppercase{\theuniversity}\\\theinstitute}
-		\fi
-		\vfill
-	\fi 
-}
-
-\def\page@author{
-	\if\theauthor\@empty\relax
-	\else
-		\MakeUppercase{\theauthor}
-		\vfill
-	\fi
-}
-
-\def\page@city{
-\if\thecity\@empty\relax
-	\else
-		\MakeUppercase{\thecity\\\the\year}
-	\fi
-}
-
+%>>>================== Backcover ========================>>>
 \define@key{backcover}{first language}{\def\backcover@first@language{#1}}
 \define@key{backcover}{second language}{\def\backcover@second@language{#1}}
 \define@key{backcover}{version text}{\def\backcover@version@text{#1}}
@@ -198,8 +238,9 @@
 	\setkeys{backcover}{#1}
 }
 
+%>>>--------------- Backcover Text ---------------------->>>
 \def\page@text{
-	\hspace*{7.5cm}
+ 	\hspace*{7.5cm}
 	\begin{minipage}{8.5cm}
 		\singlespacing
 		\if\backcover@first@language\@empty
@@ -216,7 +257,9 @@
 	\end{minipage}
 	\vfill
 }
+%<<<-----------------------------------------------------<<<
 
+%>>>------------- Backcover Version Text ---------------->>>
 \def\page@version@text{
 	\begin{minipage}{8.5cm}
 		\singlespacing
@@ -227,19 +270,13 @@
 	\end{minipage}
 	\vfill
 }
+%<<<-----------------------------------------------------<<<
 
-\def\page@supervisor{
-	\if\thesupervisor\@empty\relax
-	\else
-		{\supervisorname:~\MakeUppercase{\thesupervisor\relax}}\\
-	\fi
-	\if\thecosupervisor\@empty\relax
-	\else
-		{\cosupervisorname:~\MakeUppercase{\thecosupervisor\relax}}\\
-	\fi
-}
+%<<<=====================================================<<<
 
+%>>>=================== Maketitle =======================>>>
 \renewcommand{\maketitle}{%
+	\cleardoublepage
 	\thispagestyle{empty}
 	\page@logo
 	\begin{center}
@@ -251,7 +288,9 @@
 	\end{center}
 	\newpage
 }
+%<<<=====================================================<<<
 
+%>>>================= Makebackcover =====================>>>
 \newcommand{\makebackcover}{
 	\cleardoublepage
 	\thispagestyle{empty}
@@ -267,7 +306,9 @@
 	\end{center}
 	\newpage
 }
+%<<<=====================================================<<<
 
+%>>>===================== Headings ======================>>>
 \def\ps@headings{%
 	\def\@evenhead{\vbox{\thepage\hfill\rightmark\vskip.75\p@\hrule\relax}}
 	\def\@oddhead{\vbox{\leftmark\hfill\thepage\vskip.75\p@\hrule\relax}}
@@ -290,11 +331,18 @@
 }
 
 \def\ps@frontheadings{\ps@empty}
+%<<<=====================================================<<<
 
+%>>>=========== Frontmatter and Mainmatter ==============>>>
 \let\oldfrontmatter\frontmatter
 \renewcommand\frontmatter{\oldfrontmatter\pagestyle{frontheadings}}
 \let\oldmainmatter\mainmatter
 \renewcommand\mainmatter{\oldmainmatter\pagestyle{headings}}
+%<<<=====================================================<<<
+
+%>>>=================== Chapter =========================>>>
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
 
 \renewcommand\chapter{%
 	\@ifstar\ifgw@chapter@star\ifgw@chapter
@@ -338,7 +386,9 @@
 	\vskip 30\p@
 	\par
 }
+%<<<=====================================================<<<
 
+%>>>================== Abstract =========================>>>
 \define@key{abstract}{header}{\def\abstract@header{#1}}
 \define@key{abstract}{name}{\def\abstract@name{#1}}
 \setkeys{abstract}{name=Abstract, header=\@empty}
@@ -349,7 +399,7 @@
 	\thispagestyle{frontheadings}
 	\addcontentsline{toc}{chapter}{\bfseries\scshape\abstract@name}
 	\@mkboth{\abstract@name}{}
-	\if\abstract@header\@empty
+	\ifx\abstract@header\@empty
 		\relax
 	\else
 		{\singlespacing\noindent\abstract@header}
@@ -358,7 +408,9 @@
 }
 	\onehalfspacing
 {\newpage}
+%<<<=====================================================<<<
 
+%>>>==================== Epigraph =======================>>>
 \newcommand{\epigraph}[2]{
 	\cleardoublepage
 	\vspace*{\fill}
@@ -370,7 +422,9 @@
 	\end{flushright}
 	\break\newpage
 }
+%<<<=====================================================<<<
 
+%>>>================= Dedication ========================>>>
 \newcommand{\dedication}[1]{
 	\cleardoublepage
 	\vspace*{\fill}
@@ -381,7 +435,9 @@
 	\end{flushright}
 	\pagebreak
 }
+%<<<=====================================================<<<
 
+%>>>============== Bra, Ket and Braket ==================>>>
 \newcommand{\bra}[1]{\left\langle#1\right|}
 \newcommand{\ket}[1]{\left|#1\right\rangle}
 \newcommand{\braket}[3][]{
@@ -392,5 +448,6 @@
 		\left\langle#2\middle|#1\middle|#3\right\rangle
 	\fi
 }
+%<<<=====================================================<<<
 
 \endinput
