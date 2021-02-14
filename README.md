@@ -95,10 +95,14 @@ These macros set the _title_, the _author_, the _supervisor_, the _co-supervisor
 
 <a name="sspkg"></a>
 ### 3.2 Some Suggested Packages
+The  is provided by the gensymb package, so if you add:
 
+#### gensymb
+To use the ```\degree``` command.
+#### textcomp
+To use the  ```\textdegree``` command. 
 
-<a name="hdlf"></a>
 ### 3.3 Handling Figures and Tables
 
 
-##
+
