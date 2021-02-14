@@ -35,17 +35,56 @@ By default, the _a4paper_ and _12pt_ are passed. The _[oneside]_ is optional.
 Some macros are defined 
 
 ```Latex
-\documentclass[oneside]{ifgw}
+\documentclass[oneside]{phd-thesis}
 
-\title{}
-\author{}
-\supervisor{}
-\cosupervisor{}
-\institute{}
-\university{}
-\location{}
-\logo[align=left]{Path/to/logo}
-\facepagetext{}
+\title[Título da tese]{ Title of the thesis}	 
+\author{Paulo H. de Moura}	 
+\supervisor{Name of the Supervisor}	
+\cosupervisor{Name of the Co-supervisor}  % Optional 
+\institute[Nome do Instituto]{Institute Name}	 
+\university[Nome da Universidade]{University Name}	 
+\location{City}	
+\logo{path/to/logo} % Default: align=left, width=2cm  
+
+\backcover{
+	first language={
+		Thesis presented to the \theinstitute~of the \theuniversity~in partial 
+		fulfillment of the requirements for the degree of \uppercase{Master Jedi}, 
+		in the area of \uppercase{Jedi Guardian}.
+	},
+	second language={
+		Tese apresentada ao \theinstitute[2]~da \theuniversity[2]~como parte 
+		dos requisitos exigidos para a obtenção do título de \uppercase{Mestre Jedi}, 
+		na Área de \uppercase{Jedi Guardião}.
+	}, 
+	version text={
+		Este trabalho corresponde à versão final da tese defendida pelo 
+		aluno \theauthor~e orientada pelo Prof. Dr. \thesupervisor.
+	}
+}
+
+\begin{document}
+
+\maketitle
+\makebackcover
+
+\dedication{To my son, Luke Skywalker.}
+\epigraph{Master Yoda}{May the Force be with you!}
+
+% Resumo
+\begin{abstract}[name=Resumo]
+ Escreva seu resumo aqui.
+\end{abstract}
+
+% Abstract
+\begin{abstract}
+ Write your abstract here.
+\end{abstract}
+
+% Sumário
+\tableofcontents
+
+\end{document}
 ```
 
 These macros set the _title_, the _author_, the _supervisor_, the _co-supervisor_ (optional), the name of the _Institute_, the name of the _University_, the _city_, the _logo_ (optional) and the text for the cover page, respectively. 
@@ -56,10 +95,14 @@ These macros set the _title_, the _author_, the _supervisor_, the _co-supervisor
 
 <a name="sspkg"></a>
 ### 3.2 Some Suggested Packages
+The  is provided by the gensymb package, so if you add:
 
+#### gensymb
+To use the ```\degree``` command.
+#### textcomp
+To use the  ```\textdegree``` command. 
 
-<a name="hdlf"></a>
 ### 3.3 Handling Figures and Tables
 
 
-##
+
