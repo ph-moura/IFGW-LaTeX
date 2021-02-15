@@ -45,7 +45,7 @@
 %<<<=====================================================<<<
 
 %>>>============== Clear Doublepage =====================>>>
-\def\cleardoublepage{\clearpage
+\renewcommand{\cleardoublepage}{\clearpage
 	\if@twoside
 		\ifodd 
 			\c@page
@@ -60,22 +60,25 @@
 %<<<=====================================================<<<
 
 %>>>============== Title and Subtitle ===================>>>
+\newcommand{\titlei}{\@empty}
+\newcommand{\titleii}{}
 \renewcommand{\title}[2][]{
-	\def\titlei{{#2}}
-	\def\titleii{{#1}}
+	\renewcommand{\titlei}{{#2}}
+	\renewcommand{\titleii}{{#1}}
 }
 
-\title{}
+% \title{}
 \newcommand{\thetitle}[1][]{
 	\ifx#12\relax\titleii\else\titlei\fi	
 }
 
+\newcommand{\subtitlei}{}
+\newcommand{\subtitleii}{}
 \newcommand{\subtitle}[2][]{
-	\def\subtitlei{{#2}}
-	\def\subtitleii{{#1}}
+	\renewcommand\subtitlei{{#2}}
+	\renewcommand\subtitleii{{#1}}
 }
 
-\subtitle{}
 \newcommand{\thesubtitle}[1][]{
 	\ifx#12\relax\subtitleii\else\subtitlei\fi	
 }
@@ -83,7 +86,8 @@
 \def\page@title{
 	\if\titlei\@empty\relax
 	\else
-		\if\subtitlei\@empty\relax
+		\if\subtitlei\@empty
+			\relax
 			\MakeUppercase{\bfseries\titlei}
 		\else
 			\MakeUppercase{\bfseries\titlei:}\\\MakeUppercase{\subtitlei}
@@ -95,7 +99,7 @@
 		\if\subtitleii\@empty\relax
 			\MakeUppercase{\bfseries\titleii}
 		\else
-			\MakeUppercase{\bfseries\titleii:}\\\MakeUppercase{\subtitleii}
+			\MakeUppercase{\bfseries\titleii:\\}\MakeUppercase{\subtitleii}
 		\fi
 		\vfill
 	\fi
@@ -148,22 +152,24 @@
 %<<<=====================================================<<<
 
 %>>>================== Institution ======================>>>
+\newcommand{\institutei}{}
+\newcommand{\instituteii}{}
 \newcommand{\institute}[2][]{
-	\def\institutei{{#2}}
-	\def\instituteii{{#1}}
+	\renewcommand\institutei{{#2}}
+	\renewcommand\instituteii{{#1}}
 }
 
-\institute{}
 \newcommand{\theinstitute}[1][]{
 	\ifx#12\relax\instituteii\else\institutei\fi	
 }
 
+\newcommand{\universityi}{}
+\newcommand{\universityii}{}
 \newcommand{\university}[2][]{
-	\def\universityi{{#2}}
-	\def\universityii{{#1}}
+	\renewcommand\universityi{{#2}}
+	\renewcommand\universityii{{#1}}
 }
 
-\university{}
 \newcommand{\theuniversity}[1][]{
 	\ifx#12\relax\universityii\else\universityi\fi	
 }
@@ -243,8 +249,7 @@
  	\hspace*{7.5cm}
 	\begin{minipage}{8.5cm}
 		\singlespacing
-		\if\backcover@first@language\@empty
-			\relax
+		\if\backcover@first@language\@empty\relax
 		\else
 			\backcover@first@language
 			\vskip\baselineskip
@@ -376,7 +381,7 @@
 \newcommand\ifgw@chapter@star[1]{
 	\cleardoublepage
 	\@mkboth{}{}
-	\thispagestyle{frontheadings}
+	% \thispagestyle{frontheadings}
 	\begingroup
 		% \vspace*{20\p@}
 		\selectfont\huge\bfseries\scshape
@@ -396,7 +401,7 @@
 \newenvironment{abstract}[1][]{%
 	\setkeys{abstract}{#1}
 	\chapter*{\abstract@name}
-	\thispagestyle{frontheadings}
+	% \thispagestyle{frontheadings}
 	\addcontentsline{toc}{chapter}{\bfseries\scshape\abstract@name}
 	\@mkboth{\abstract@name}{}
 	\ifx\abstract@header\@empty

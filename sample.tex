@@ -1,6 +1,6 @@
 \documentclass[oneside]{ifgw}
 
-\usepackage{caption}
+% \usepackage{caption}
 \usepackage{cite}
 \usepackage{fourier}
 \usepackage{lipsum}
@@ -34,10 +34,12 @@
 
 \begin{document}
 % \frontmatter
+% \pagestyle{plain}
 \maketitle
 \makebackcover
 \dedication{To my son, Luke Skywalker.}
 \epigraph{Master Yoda}{May the Force be with you!}
+
 
 % Resumo
 \begin{abstract}[name=Resumo]
@@ -52,6 +54,16 @@
 % Sumário
 \tableofcontents
 
+\begin{abstract}[name=List of Symbols]
+\noindent
+\copyright\\
+\textcircled{a}\\
+$\bullet$ \\
+\textregistered\\
+\texttrademark\\
+
+\end{abstract}
+
 % \mainmatter
 
 %>>>=====================================================>>>
@@ -65,7 +77,7 @@ Rebel spaceships, striking from a hidden base, have won their first victory agai
 
 \begin{center}
 \includegraphics[width=.35\textwidth]{Images/unicamp.png}
-\captionof{figure}{\lipsum[12]}
+% \captionof{figure}{\lipsum[12]}
 \end{center}
 
 \lipsum[4-10]
