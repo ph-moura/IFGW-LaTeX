@@ -39,8 +39,11 @@
 %>>>================== Bibliography =====================>>>
 \let\oldbibliography\bibliography
 \renewcommand{\bibliography}[1]{
+	\cleardoublepage
+	\thispagestyle{plain}
 	\oldbibliography{#1}
 	\addcontentsline{toc}{chapter}{\bfseries\scshape\bibname}
+	\markboth{\bibname}{\bibname}
 }
 %<<<=====================================================<<<
 
@@ -230,13 +233,13 @@
 %<<<=====================================================<<<
 
 %>>>================== Backcover ========================>>>
-\define@key{backcover}{first language}{\def\backcover@first@language{#1}}
-\define@key{backcover}{second language}{\def\backcover@second@language{#1}}
+\define@key{backcover}{first text}{\def\backcover@first@text{#1}}
+\define@key{backcover}{second text}{\def\backcover@second@text{#1}}
 \define@key{backcover}{version text}{\def\backcover@version@text{#1}}
 
 \setkeys{backcover}{	
-	first language=\@empty, 
-	second language=\@empty, 
+	first text=\@empty, 
+	second text=\@empty, 
 	version text=\@empty
 }
 
@@ -249,15 +252,15 @@
  	\hspace*{7.5cm}
 	\begin{minipage}{8.5cm}
 		\singlespacing
-		\if\backcover@first@language\@empty\relax
+		\if\backcover@first@text\@empty\relax
 		\else
-			\backcover@first@language
+			\backcover@first@text
 			\vskip\baselineskip
 		\fi
-		\if\backcover@second@language\@empty
+		\if\backcover@second@text\@empty
 			\relax
 		\else
-			\backcover@second@language
+			\backcover@second@text
 		\fi
 	\end{minipage}
 	\vfill
@@ -340,9 +343,20 @@
 
 %>>>=========== Frontmatter and Mainmatter ==============>>>
 \let\oldfrontmatter\frontmatter
-\renewcommand\frontmatter{\oldfrontmatter\pagestyle{frontheadings}}
+\renewcommand\frontmatter{
+ 	\setcounter{page}{1}
+	\oldfrontmatter\pagestyle{plain}
+}
+
 \let\oldmainmatter\mainmatter
-\renewcommand\mainmatter{\oldmainmatter\pagestyle{headings}}
+\renewcommand\mainmatter{
+	\oldmainmatter\pagestyle{headings}
+}
+\let\oldbackmatter\backmatter
+\renewcommand\backmatter{
+	% \renewcommand{\thepage}{\roman{page}}
+	\oldbackmatter\pagestyle{headings}
+}
 %<<<=====================================================<<<
 
 %>>>=================== Chapter =========================>>>
@@ -363,7 +377,7 @@
 	\refstepcounter{chapter}
 	\def\chtext{#1}
 	\ifx\chtext\@empty\relax\renewcommand{\chtext}{#2}\fi
-	\addcontentsline{toc}{chapter}{\sc\bfseries\thechapter.~#2}
+	\addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}
 	\@mkboth{\thechapter.~\chtext}{}
 	\begingroup
 		% \vspace*{20\p@}
@@ -373,7 +387,7 @@
 		\vskip5\p@
 		\noindent\rule{\textwidth}{\chapterrulewidth}
 	\endgroup
-	\vskip 30\p@
+	\vskip 35\p@
 	\par
 }
 
