@@ -212,7 +212,7 @@
 \def\logo@align@right{flushright}
 \newlength{\logo@width}
 
-\define@key{logo}{width}[2cm]{\setlength\logo@width{#1}}
+\define@key{logo}{width}{\setlength\logo@width{#1}}
 \define@key{logo}{align}{\def\logo@align{\csname logo@align@#1\endcsname}}
 \setkeys{logo}{align=left, width=2cm}
 
@@ -225,9 +225,7 @@
 \def\page@logo{
 	\if\thelogo\@empty\relax
 	\else
-		\begin{\logo@align}
 			\thelogo
-		\end{\logo@align}
 	\fi
 }
 %<<<=====================================================<<<
@@ -286,7 +284,9 @@
 \renewcommand{\maketitle}{%
 	\cleardoublepage
 	\thispagestyle{empty}
-	\page@logo
+	\begin{\logo@align}
+		\page@logo
+	\end{\logo@align}
 	\begin{center}
 		\page@institution
 		\page@author

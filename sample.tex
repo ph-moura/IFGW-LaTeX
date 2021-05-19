@@ -3,6 +3,7 @@
 \usepackage{caption}
 \usepackage{cite}
 \usepackage{fourier}
+
 \usepackage{lipsum}
 
 \author{Anakin Skywalker}
@@ -18,7 +19,7 @@
 \backcover{
 	first text={
 		Thesis presented to the \theinstitute~of the \theuniversity~in partial 
-		fulfillment of the requirements for the degree of \uppercase{Master Jedi}, 
+		fulfillment of the requirements for the de\-gree of \uppercase{Mas\-ter Jedi}, 
 		in the area of \uppercase{Jedi Guardian}.
 	},
 	second text={
@@ -27,10 +28,13 @@
 		na Área de \uppercase{Jedi Guardião}.
 	}, 
 	version text={
-		Este trabalho corresponde à versão final da tese defendida pelo 
-		aluno \theauthor~e orientada pelo Prof. Dr. \thesupervisor.
+		Es\-te tra\-ba\-lho cor\-res\-pon\-de à ver\-são fi\-nal da te\-se de\-fen\-di\-da pe\-lo 
+		a\-lu\-no \theauthor~e ori\-en\-ta\-da pe\-lo Prof. Dr. \thesupervisor.
 	}
 }
+
+\brokenpenalty=100
+\interlinepenalty=100
 
 \begin{document}
 \maketitle
@@ -47,6 +51,19 @@
 % Abstract
 \begin{abstract}
 \lipsum[1]
+
+\begin{equation}
+\braket[H]{\alpha}{\beta}
+\end{equation}
+
+\begin{equation}
+\braket{\alpha}{\beta}
+\end{equation}
+
+\begin{equation}
+\braket[]{\alpha}{\beta}
+\end{equation}
+
 \end{abstract}
 
 % Sumário
