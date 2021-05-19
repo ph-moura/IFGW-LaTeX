@@ -102,6 +102,7 @@ To use the ```\degree``` command.
 #### textcomp
 To use the  ```\textdegree``` command. 
 
+<a name="hdlf"></a>
 ### 3.3 Handling Figures and Tables
 
 
