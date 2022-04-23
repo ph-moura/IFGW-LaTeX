@@ -9,7 +9,8 @@
 %>>>=============== Required Packages ===================>>>
 \RequirePackage[T1]{fontenc}
 \RequirePackage{geometry}
-\RequirePackage[dvipdfm]{graphicx}
+% \RequirePackage[dvipdfm]{graphicx}
+\RequirePackage{graphicx}
 \RequirePackage{hyperref}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
@@ -225,7 +226,7 @@
 \def\page@logo{
     \if\thelogo\@empty\relax
     \else
-            \thelogo
+        \thelogo
     \fi
 }
 %<<<=====================================================<<<
@@ -318,8 +319,28 @@
 
 %>>>===================== Headings ======================>>>
 \def\ps@headings{%
-    \def\@evenhead{\vbox{\thepage\hfill\rightmark\vskip.75\p@\hrule\relax}}
-    \def\@oddhead{\vbox{\leftmark\hfill\thepage\vskip.75\p@\hrule\relax}}
+    \def\@evenhead{%
+        \parbox{\textwidth}{%
+            \thepage
+            \hfill
+            \rightmark 
+            \vskip-0.7\baselineskip
+            \rule{\textwidth}{0.7pt}
+            \relax
+        }
+    }
+
+    \def\@oddhead{%
+        \parbox{\textwidth}{%
+            \leftmark
+            \hfill
+            \thepage 
+            \vskip-0.7\baselineskip
+            \rule{\textwidth}{0.7pt}
+            \relax
+        }
+    }
+
     \let\@oddfoot\@empty\let\@evenfoot\@empty
     \let\@mkboth\markboth
 }

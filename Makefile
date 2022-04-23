@@ -2,6 +2,8 @@
 
 PROJ_NAME=sample
 
+TARGET=ifgw.cls
+INSTALLDIR=/usr/share/texmf-dist/tex/latex/
 COMPILER=pdflatex
 BIB=bibtex
 
@@ -11,6 +13,10 @@ pdf:
 	${COMPILER} ${PROJ_NAME}
 	${COMPILER} ${PROJ_NAME}
 	
+install:
+	sudo cp ${TARGET} ${INSTALLDIR}
+	sudo mktexlsr 
+
 read:
 	zathura ${PROJ_NAME}.pdf &
 
