@@ -497,8 +497,7 @@
 \newcommand{\bra}[1]{\left\langle#1\right|}
 \newcommand{\ket}[1]{\left|#1\right\rangle}
 \newcommand{\braket}[3][]{
-    \def\tmp{#1}
-    \ifx\tmp\@empty\relax
+    \ifx\relax#1\relax
         \left\langle#2\middle|#3\right\rangle
     \else
         \left\langle#2\middle|#1\middle|#3\right\rangle
