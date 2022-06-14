@@ -9,8 +9,8 @@ BIB=bibtex
 
 pdf:
 	${COMPILER} ${PROJ_NAME}
-	${BIB} ${PROJ_NAME}
 	${COMPILER} ${PROJ_NAME}
+	${BIB} ${PROJ_NAME}
 	${COMPILER} ${PROJ_NAME}
 	
 install:
