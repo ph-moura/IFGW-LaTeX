@@ -14,6 +14,7 @@
 \RequirePackage{hyperref}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
+\RequirePackage{xcolor}
 %<<<=====================================================<<<
 
 %>>>=============== Page Layout =========================>>>
@@ -24,6 +25,16 @@
     left=3cm,
     includehead,
     % includefoot,
+}
+%<<<=====================================================<<<
+
+%>>>================ hypersetup =========================>>>
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!75!green,
+    filecolor=magenta,
+    citecolor=green!60!blue,
+    urlcolor=cyan,
 }
 %<<<=====================================================<<<
 
