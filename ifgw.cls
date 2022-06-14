@@ -76,14 +76,16 @@
 %<<<=====================================================<<<
 
 %>>>============== Title and Subtitle ===================>>>
-\newcommand{\titlei}{\@empty}
+\newcommand{\titlei}{}
 \newcommand{\titleii}{}
 \renewcommand{\title}[2][]{
     \renewcommand{\titlei}{{#2}}
-    \renewcommand{\titleii}{{#1}}
+    \ifx\relax#1\relax
+    \else
+        \renewcommand{\titleii}{{#1}}
+    \fi
 }
 
-% \title{}
 \newcommand{\thetitle}[1][]{
     \ifx#12\relax\titleii\else\titlei\fi    
 }
@@ -92,7 +94,10 @@
 \newcommand{\subtitleii}{}
 \newcommand{\subtitle}[2][]{
     \renewcommand\subtitlei{{#2}}
-    \renewcommand\subtitleii{{#1}}
+    \ifx\relax#1\relax
+    \else
+        \renewcommand\subtitleii{{#1}}
+    \fi
 }
 
 \newcommand{\thesubtitle}[1][]{
@@ -100,19 +105,18 @@
 }
 
 \def\page@title{
-    \if\titlei\@empty\relax
+    \if\relax\titlei\relax
     \else
-        \if\subtitlei\@empty
-            \relax
+        \if\relax\subtitlei\relax
             \MakeUppercase{\bfseries\titlei}
         \else
             \MakeUppercase{\bfseries\titlei:}\\\MakeUppercase{\subtitlei}
         \fi
         \vfill
     \fi
-    \if\titleii\@empty\relax
+    \if\relax\titleii\relax
     \else
-        \if\subtitleii\@empty\relax
+        \if\relax\subtitleii\relax
             \MakeUppercase{\bfseries\titleii}
         \else
             \MakeUppercase{\bfseries\titleii:\\}\MakeUppercase{\subtitleii}
