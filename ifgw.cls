@@ -11,7 +11,7 @@
 \RequirePackage{geometry}
 % \RequirePackage[dvipdfm]{graphicx}
 \RequirePackage{graphicx}
-\RequirePackage{hyperref}
+\RequirePackage[pageanchor]{hyperref}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
@@ -44,7 +44,6 @@
     \pagestyle{frontheadings}
     \parindent2cm
     \onehalfspacing
-    \newcounter{@counter}
     \makeatletter
     \newwrite\@los
     \IfFileExists{\jobname.los}{}{\immediate\openout\@los=\jobname.los}
@@ -511,41 +510,32 @@
 %>>>================ List of Symbols ====================>>>
 \newcommand{\newsymbol}[3]{
     \newcounter{#1}
-
     \expandafter\newcommand\expandafter{\csname #1\endcsname}{
-        \@ifstar{\expandafter\csname @@#1\endcsname}{\expandafter\csname @#1\endcsname}
-    }
-
-    \expandafter\def\csname @@#1\endcsname{\TextOrMath{$#2$}{#2}}
-
-    \expandafter\def\csname @#1\endcsname{
         \refstepcounter{#1}
-        \label{#1\csname the#1\endcsname}
         \TextOrMath{$#2$}{#2}
         \if\csname the#1\endcsname1\relax
-                \def\file@line{\TextOrMath{$#2$}{#2}}
-                \immediate\write\@los{%
-                    \string\symbolsline%
-                    \string{\string#1\string}%
-                    \string{\unexpanded\expandafter{\file@line}\string}%
-                    \string{#3\string}%
-                    \string{\csname the#1\endcsname\string}%
-                }
+            \def\file@line{\TextOrMath{$#2$}{#2}}
+            \def\symb@description{#3}
+            \immediate\write\@los{%
+                \string\symbolsline%
+                \string{\string#1\string}%
+                \string{\unexpanded\expandafter{\file@line}\string}%
+                \string{\unexpanded\expandafter{\symb@description}\string}%
+                \string{\thepage\string}%
+            }
         \fi
     }
 }
 
-\newcommand{\on@page}[2]{\setcounter{@counter}{#2}\pageref{#1\the@counter}}
-
 \newcommand{\symbolsline}[4]{%
-    \noindent
-    \begingroup
-    \singlespacing\flushleft#2{\dotfill}
-    \begin{minipage}[t]{8cm}
-        {#3{\hfill\on@page{#1}{#4}}}\\~
-        % {#3{\dotfill\on@page{#1}{#4}}}\\
-    \end{minipage}
-    \endgroup
+    \noindent%
+    \begingroup%
+    \singlespacing\flushleft#2{~\dotfill~}%
+    \begin{minipage}[t]{10cm}%
+        \hyperlink{page.#4}{#3\hfill\textcolor{black}{~#4}}%
+    \end{minipage}%
+    \par
+    \endgroup%
 }
 
 \newcommand{\listofsymbols}[1][]{%
