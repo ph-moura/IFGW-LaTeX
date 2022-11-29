@@ -454,8 +454,6 @@
 \newenvironment{abstract}[1][]{%
     \setkeys{abstract}{#1}
     \chapter*{\abstract@name}
-    % \thispagestyle{frontheadings}
-    \addcontentsline{toc}{chapter}{\bfseries\scshape\abstract@name}
     \@mkboth{\abstract@name}{}
     \ifx\abstract@header\@empty
         \relax
@@ -512,7 +510,9 @@
     \newcounter{#1}
     \expandafter\newcommand\expandafter{\csname #1\endcsname}{
         \refstepcounter{#1}
-        \TextOrMath{$#2$}{#2}
+        \hyperlink{los:#1}{
+            \textcolor{black}{\TextOrMath{$#2$}{#2}}
+        }
         \if\csname the#1\endcsname1\relax
             \def\file@line{\TextOrMath{$#2$}{#2}}
             \def\symb@description{#3}
@@ -532,17 +532,16 @@
     \begingroup%
     \singlespacing\flushleft#2{~\dotfill~}%
     \begin{minipage}[t]{10cm}%
-        \hyperlink{page.#4}{#3\hfill\textcolor{black}{~#4}}%
+        \hyperlink{page.#4}{\hypertarget{los:#1}{#3\hfill\textcolor{black}{~#4}}}%
     \end{minipage}%
     \par
     \endgroup%
 }
 
 \newcommand{\listofsymbols}[1][]{%
-    \ifx\relax#1\relax\newcommand{\losname}{List of symbols}\else\newcommand{\losname}{#1}\fi
+    \ifx\relax#1\relax\newcommand{\losname}{List of Symbols}\else\newcommand{\losname}{#1}\fi
     \cleardoublepage
     \chapter*{\losname}
-    \addcontentsline{toc}{chapter}{\bfseries\scshape \losname}
     \vskip\baselineskip
     \IfFileExists{\jobname.los}{\input{\jobname.los}}{}
 }

@@ -8,12 +8,12 @@
 \author{Anakin Skywalker}
 \city{Tatooine}
 \cosupervisor[Co-orientador]{Obi-Wan Kenobi}
-\institute[Instituto Darth Plagueis]{Darth Plagueis Institute}
+\institute[Darth Plagueis Institute]{Instituto Darth Plagueis}
 \logo[align=left]{Images/unicamp.png}
 \supervisor{Master Yoda}
 \title[Guerra nas estrelas]{Star Wars}
 \subtitle[Que a Força esteja com você]{May the Force be with you}
-\university[Universidade do Império Galático]{University of the Galactic Empire}
+\university[University of the Galactic Empire]{Universidade do Império Galático}
 
 \input{Chapters/coverInfo}
 \input{Chapters/listOfSymbols}
@@ -29,8 +29,10 @@
 \include{Chapters/resumo}
 \include{Chapters/abstract}
 
-\tableofcontents
 \listofsymbols
+\listoffigures
+\listoftables
+\tableofcontents
 
 \include{Chapters/ch01}
 \include{Chapters/ch02}
@@ -39,12 +41,12 @@
 \include{Chapters/ch05}
 \include{Chapters/ch06}
 
+\bibliographystyle{naturemag}
+\bibliography{Chapters/Bibliography}
+
 \appendix
 \include{Chapters/ch07}
 \include{Chapters/ch08}
 \include{Chapters/ch09}
-
-\bibliographystyle{naturemag}
-\bibliography{Chapters/Bibliography}
 
 \end{document}
