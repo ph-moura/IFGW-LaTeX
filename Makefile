@@ -8,6 +8,8 @@ COMPILER=pdflatex
 BIB=bibtex
 CLEAN=.{ps,toc,log,lof,lot,los,sym,nav,snm,aux,out,dvi,bbl,blg}
 
+all: pdf clean
+
 pdf:
 	${COMPILER} ${PROJ_NAME}
 	${BIB} ${PROJ_NAME}
