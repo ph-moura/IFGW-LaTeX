@@ -23,12 +23,11 @@
     right=2cm,
     left=3cm,
     includehead,
-    % includefoot,
 }
 %<<<=====================================================<<<
 
 %>>>================ hypersetup =========================>>>
-\hypersetup{
+\hypersetup{%
     colorlinks=true,
     linkcolor=blue!75!green,
     filecolor=magenta,
@@ -38,21 +37,17 @@
 %<<<=====================================================<<<
 
 %>>>========= At Begin Document Deffinitions ============>>>
-\AtBeginDocument{
-    \def\captionfont{\small}
+\AtBeginDocument{%
+    \renewcommand{\captionfont}{\small}
     \pagestyle{frontheadings}
     \parindent2cm
     \onehalfspacing
-    \makeatletter
-    \newwrite\@los
-    \IfFileExists{\jobname.los}{}{\immediate\openout\@los=\jobname.los}
-    \makeatother
 }
 %<<<=====================================================<<<
 
 %>>>================== Bibliography =====================>>>
 \let\oldbibliography\bibliography
-\renewcommand{\bibliography}[1]{
+\renewcommand{\bibliography}[1]{%
     \cleardoublepage
     \thispagestyle{plain}
     \oldbibliography{#1}
@@ -62,7 +57,8 @@
 %<<<=====================================================<<<
 
 %>>>============== Clear Doublepage =====================>>>
-\renewcommand{\cleardoublepage}{\clearpage
+\renewcommand{\cleardoublepage}{%
+    \clearpage
     \if@twoside
         \ifodd 
             \c@page
@@ -70,7 +66,7 @@
             \vspace*{\fill}
             \thispagestyle{empty}
             \newpage
-            \if@twocolumn\hbox{}\newpage\fi
+            \if@twocolumn\mbox{}\newpage\fi
         \fi
     \fi
 }
@@ -79,48 +75,42 @@
 %>>>============== Title and Subtitle ===================>>>
 \newcommand{\titlei}{}
 \newcommand{\titleii}{}
-\renewcommand{\title}[2][]{
+\renewcommand{\title}[2][]{%
     \renewcommand{\titlei}{{#2}}
-    \ifx\relax#1\relax
-    \else
-        \renewcommand{\titleii}{{#1}}
-    \fi
+    \ifx\relax#1\relax\else\renewcommand{\titleii}{{#1}}\fi
 }
 
-\newcommand{\thetitle}[1][]{
+\newcommand{\thetitle}[1][]{%
     \ifx#12\relax\titleii\else\titlei\fi    
 }
 
 \newcommand{\subtitlei}{}
 \newcommand{\subtitleii}{}
-\newcommand{\subtitle}[2][]{
-    \renewcommand\subtitlei{{#2}}
-    \ifx\relax#1\relax
-    \else
-        \renewcommand\subtitleii{{#1}}
-    \fi
+\newcommand{\subtitle}[2][]{%
+    \renewcommand{\subtitlei}{{#2}}
+    \ifx\relax#1\relax\else\renewcommand{\subtitleii}{{#1}}\fi
 }
 
-\newcommand{\thesubtitle}[1][]{
+\newcommand{\thesubtitle}[1][]{%
     \ifx#12\relax\subtitleii\else\subtitlei\fi  
 }
 
-\def\page@title{
+\newcommand{\ifgw@page@title}{%
     \if\relax\titlei\relax
     \else
         \if\relax\subtitlei\relax
-            \MakeUppercase{\bfseries\titlei}
+            \MakeUppercase{\textbf{\titlei}}
         \else
-            \MakeUppercase{\bfseries\titlei:}\\\MakeUppercase{\subtitlei}
+            \MakeUppercase{\textbf{\titlei:}}\\\MakeUppercase{\subtitlei}
         \fi
         \vfill
     \fi
     \if\relax\titleii\relax
     \else
         \if\relax\subtitleii\relax
-            \MakeUppercase{\bfseries\titleii}
+            \MakeUppercase{\textbf{\titleii}}
         \else
-            \MakeUppercase{\bfseries\titleii:\\}\MakeUppercase{\subtitleii}
+            \MakeUppercase{\textbf{\titleii:}}\\\MakeUppercase{\subtitleii}
         \fi
         \vfill
     \fi
@@ -136,12 +126,8 @@
     \renewcommand{\theauthor}{{#1}}
 }
 
-\def\page@author{
-    \if\theauthor\@empty\relax
-    \else
-        \MakeUppercase{\theauthor}
-        \vfill
-    \fi
+\newcommand{\ifgw@page@author}{%
+    \if\theauthor\@empty\relax\else\MakeUppercase{\theauthor}\vfill\fi
 }
 %<<<=====================================================<<<
 
@@ -160,7 +146,7 @@
     \renewcommand{\thecosupervisor}{{#2}}
 }
 
-\def\page@supervisor{
+\newcommand{\ifgw@page@supervisor}{%
     \if\thesupervisor\@empty\relax
     \else
         {\supervisorname:}~{\MakeUppercase{\thesupervisor\relax}}\\
@@ -175,27 +161,27 @@
 %>>>================== Institution ======================>>>
 \newcommand{\institutei}{}
 \newcommand{\instituteii}{}
-\newcommand{\institute}[2][]{
+\newcommand{\institute}[2][]{%
     \renewcommand\institutei{{#2}}
     \renewcommand\instituteii{{#1}}
 }
 
-\newcommand{\theinstitute}[1][]{
+\newcommand{\theinstitute}[1][]{%
     \ifx#12\relax\instituteii\else\institutei\fi    
 }
 
 \newcommand{\universityi}{}
 \newcommand{\universityii}{}
-\newcommand{\university}[2][]{
+\newcommand{\university}[2][]{%
     \renewcommand\universityi{{#2}}
     \renewcommand\universityii{{#1}}
 }
 
-\newcommand{\theuniversity}[1][]{
+\newcommand{\theuniversity}[1][]{%
     \ifx#12\relax\universityii\else\universityi\fi  
 }
 
-\def\page@institution{
+\newcommand{\ifgw@page@institution}{%
     \if\universityi\@empty\relax
     \else
         \if\institutei\@empty\relax
@@ -216,67 +202,61 @@
 
 \newcommand{\theyear}{\the\year}
 
-\def\page@city{
-    \if\thecity\@empty\relax
-    \else
-        \MakeUppercase{\thecity\\\the\year}
-    \fi
+\newcommand{\ifgw@page@city}{%
+    \if\thecity\@empty\relax\else\MakeUppercase{\thecity\\\the\year}\fi
 }
 %<<<=====================================================<<<
 
 %>>>====================== Logo =========================>>>
-\def\logo@align@center{center}
-\def\logo@align@left{flushleft}
-\def\logo@align@right{flushright}
-\newlength{\logo@width}
+\newcommand{\ifgw@logo@align@center}{center}
+\newcommand{\ifgw@logo@align@left}{flushleft}
+\newcommand{\ifgw@logo@align@right}{flushright}
+\newlength{\ifgw@logo@width}
 
-\define@key{logo}{width}{\setlength\logo@width{#1}}
-\define@key{logo}{align}{\def\logo@align{\csname logo@align@#1\endcsname}}
+\define@key{logo}{width}{\setlength\ifgw@logo@width{#1}}
+\define@key{logo}{align}{\def\logo@align{\csname ifgw@logo@align@#1\endcsname}}
 \setkeys{logo}{align=left, width=2cm}
 
 \newcommand{\thelogo}{}
-\newcommand{\logo}[2][]{
+\newcommand{\logo}[2][]{%
     \setkeys{logo}{#1}
-    \renewcommand{\thelogo}{\includegraphics[width=\logo@width]{#2}}
+    \renewcommand{\thelogo}{\includegraphics[width=\ifgw@logo@width]{#2}}
 }
 
-\def\page@logo{
-    \if\thelogo\@empty\relax
-    \else
-        \thelogo
-    \fi
+\newcommand{\ifgw@page@logo}{%
+    \if\thelogo\@empty\relax\else\thelogo\fi
 }
 %<<<=====================================================<<<
 
 %>>>================== Backcover ========================>>>
-\define@key{backcover}{first text}{\def\backcover@first@text{#1}}
-\define@key{backcover}{second text}{\def\backcover@second@text{#1}}
-\define@key{backcover}{version text}{\def\backcover@version@text{#1}}
+\define@key{backcover}{first text}{\def\ifgw@backcover@first@text{#1}}
+\define@key{backcover}{second text}{\def\ifgw@backcover@second@text{#1}}
+\define@key{backcover}{version text}{\def\ifgw@backcover@version@text{#1}}
 
-\setkeys{backcover}{    
-    first text=\@empty, 
-    second text=\@empty, 
+\setkeys{backcover}{%
+    first text=\@empty,
+    second text=\@empty,
     version text=\@empty
 }
 
-\newcommand{\backcover}[1]{
+\newcommand{\backcover}[1]{%
     \setkeys{backcover}{#1}
 }
 
 %>>>--------------- Backcover Text ---------------------->>>
-\def\page@text{
+\newcommand{\ifgw@page@text}{%
     \hspace*{7.5cm}
     \begin{minipage}{8.5cm}
         \singlespacing
-        \if\backcover@first@text\@empty\relax
+        \if\ifgw@backcover@first@text\@empty\relax
         \else
-            \backcover@first@text
+            \ifgw@backcover@first@text
             \vskip\baselineskip
         \fi
-        \if\backcover@second@text\@empty
+        \if\ifgw@backcover@second@text\@empty
             \relax
         \else
-            \backcover@second@text
+            \ifgw@backcover@second@text
         \fi
     \end{minipage}
     \vfill
@@ -284,12 +264,12 @@
 %<<<-----------------------------------------------------<<<
 
 %>>>------------- Backcover Version Text ---------------->>>
-\def\page@version@text{
+\newcommand{\ifgw@page@version@text}{%
     \begin{minipage}{8.5cm}
         \singlespacing
-        \if\backcover@version@text\@empty\relax
+        \if\ifgw@backcover@version@text\@empty\relax
         \else
-        \MakeUppercase{\backcover@version@text}
+        \MakeUppercase{\ifgw@backcover@version@text}
         \fi
     \end{minipage}
     \vfill
@@ -303,32 +283,32 @@
     \cleardoublepage
     \thispagestyle{empty}
     \begin{\logo@align}
-        \page@logo
+        \ifgw@page@logo
     \end{\logo@align}
     \begin{center}
-        \page@institution
-        \page@author
-        \page@title 
+        \ifgw@page@institution
+        \ifgw@page@author
+        \ifgw@page@title
         \vfill
-        \page@city  
+        \ifgw@page@city
     \end{center}
     \newpage
 }
 %<<<=====================================================<<<
 
 %>>>================= Makebackcover =====================>>>
-\newcommand{\makebackcover}{
+\newcommand{\makebackcover}{%
     \cleardoublepage
     \thispagestyle{empty}
     \begin{center}
-        \page@author
-        \page@title 
-        \page@text
+        \ifgw@page@author
+        \ifgw@page@title
+        \ifgw@page@text
     \end{center}
-    \page@supervisor
-    \page@version@text
+    \ifgw@page@supervisor
+    \ifgw@page@version@text
     \begin{center}
-        \page@city  
+        \ifgw@page@city
     \end{center}
     \newpage
 }
@@ -381,18 +361,16 @@
 
 %>>>=========== Frontmatter and Mainmatter ==============>>>
 \let\oldfrontmatter\frontmatter
-\renewcommand\frontmatter{
+\renewcommand{\frontmatter}{%
     \setcounter{page}{1}
     \oldfrontmatter\pagestyle{plain}
 }
-
 \let\oldmainmatter\mainmatter
-\renewcommand\mainmatter{
+\renewcommand{\mainmatter}{%
     \oldmainmatter\pagestyle{headings}
 }
 \let\oldbackmatter\backmatter
-\renewcommand\backmatter{
-    % \renewcommand{\thepage}{\roman{page}}
+\renewcommand{\backmatter}{%
     \oldbackmatter\pagestyle{headings}
 }
 %<<<=====================================================<<<
@@ -401,14 +379,14 @@
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
 
-\renewcommand\chapter{%
+\renewcommand{\chapter}{%
     \@ifstar\ifgw@chapter@star\ifgw@chapter
 }
 
 \newlength{\chapterrulewidth}
 \setlength{\chapterrulewidth}{1.5\p@}
 
-\newcommand{\ifgw@chapter}[2][]{
+\newcommand{\ifgw@chapter}[2][]{%
     \cleardoublepage
     \pagestyle{headings}
     \thispagestyle{plain}
@@ -443,18 +421,18 @@
 %<<<=====================================================<<<
 
 %>>>================== Abstract =========================>>>
-\define@key{abstract}{header}{\def\abstract@header{#1}}
-\define@key{abstract}{name}{\def\abstract@name{#1}}
+\define@key{abstract}{header}{\def\ifgw@abstract@header{#1}}
+\define@key{abstract}{name}{\def\ifgw@abstract@name{#1}}
 \setkeys{abstract}{name=Abstract, header=\@empty}
 
 \newenvironment{abstract}[1][]{%
     \setkeys{abstract}{#1}
-    \chapter*{\abstract@name}
-    \@mkboth{\abstract@name}{}
-    \ifx\abstract@header\@empty
+    \chapter*{\ifgw@abstract@name}
+    \@mkboth{\ifgw@abstract@name}{}
+    \ifx\ifgw@abstract@header\@empty
         \relax
     \else
-        {\singlespacing\noindent\abstract@header}
+        {\singlespacing\noindent\ifgw@abstract@header}
     \fi
     \noindent\break
 }
@@ -463,12 +441,12 @@
 %<<<=====================================================<<<
 
 %>>>==================== Epigraph =======================>>>
-\newcommand{\epigraph}[2]{
+\newcommand{\epigraph}[2]{%
     \cleardoublepage
     \vspace*{\fill}
     \begin{flushright}
         \begin{minipage}{8.5cm}
-            {\it``#2''}\\
+            {\it #2}\\
             {\hspace*{\fill}\it#1}
         \end{minipage}
     \end{flushright}
@@ -477,7 +455,7 @@
 %<<<=====================================================<<<
 
 %>>>================= Dedication ========================>>>
-\newcommand{\dedication}[1]{
+\newcommand{\dedication}[1]{%
     \cleardoublepage
     \vspace*{\fill}
     \begin{flushright}
