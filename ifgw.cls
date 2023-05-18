@@ -9,7 +9,6 @@
 %>>>=============== Required Packages ===================>>>
 \RequirePackage[T1]{fontenc}
 \RequirePackage{geometry}
-% \RequirePackage[dvipdfm]{graphicx}
 \RequirePackage{graphicx}
 \RequirePackage[pageanchor]{hyperref}
 \RequirePackage{setspace}
@@ -419,7 +418,6 @@
     \addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}
     \@mkboth{\thechapter.~\chtext}{}
     \begingroup
-        % \vspace*{20\p@}
         \selectfont\huge\scshape\noindent\@chapapp~\thechapter
         \vskip\baselineskip
         \linespread{1.5}\noindent{\bfseries#2}
@@ -431,12 +429,10 @@
 }
 
 \newcounter{chapterstar}
-\newcommand\ifgw@chapter@star[1]{
+\newcommand{\ifgw@chapter@star}[1]{%
     \cleardoublepage
     \@mkboth{}{}
-    % \thispagestyle{frontheadings}
     \begingroup
-        % \vspace*{20\p@}
         \selectfont\huge\bfseries\scshape
         \linespread{1.5}\noindent#1
     \endgroup
@@ -490,60 +486,6 @@
         \end{minipage}
     \end{flushright}
     \pagebreak
-}
-%<<<=====================================================<<<
-
-%>>>============== Bra, Ket and Braket ==================>>>
-\newcommand{\bra}[1]{\left\langle#1\right|}
-\newcommand{\ket}[1]{\left|#1\right\rangle}
-\newcommand{\braket}[3][]{
-    \ifx\relax#1\relax
-        \left\langle#2\middle|#3\right\rangle
-    \else
-        \left\langle#2\middle|#1\middle|#3\right\rangle
-    \fi
-}
-%<<<=====================================================<<<
-
-%>>>================ List of Symbols ====================>>>
-\newcommand{\newsymbol}[3]{
-    \newcounter{#1}
-    \expandafter\newcommand\expandafter{\csname #1\endcsname}{
-        \refstepcounter{#1}
-        \hyperlink{los:#1}{
-            \textcolor{black}{\TextOrMath{$#2$}{#2}}
-        }
-        \if\csname the#1\endcsname1\relax
-            \def\file@line{\TextOrMath{$#2$}{#2}}
-            \def\symb@description{#3}
-            \immediate\write\@los{%
-                \string\symbolsline%
-                \string{\string#1\string}%
-                \string{\unexpanded\expandafter{\file@line}\string}%
-                \string{\unexpanded\expandafter{\symb@description}\string}%
-                \string{\thepage\string}%
-            }
-        \fi
-    }
-}
-
-\newcommand{\symbolsline}[4]{%
-    \noindent%
-    \begingroup%
-    \singlespacing\flushleft#2{~\dotfill~}%
-    \begin{minipage}[t]{10cm}%
-        \hyperlink{page.#4}{\hypertarget{los:#1}{#3\hfill\textcolor{black}{~#4}}}%
-    \end{minipage}%
-    \par
-    \endgroup%
-}
-
-\newcommand{\listofsymbols}[1][]{%
-    \ifx\relax#1\relax\newcommand{\losname}{List of Symbols}\else\newcommand{\losname}{#1}\fi
-    \cleardoublepage
-    \chapter*{\losname}
-    \vskip\baselineskip
-    \IfFileExists{\jobname.los}{\input{\jobname.los}}{}
 }
 %<<<=====================================================<<<
 
