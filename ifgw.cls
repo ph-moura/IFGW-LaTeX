@@ -8,6 +8,7 @@
 
 %>>>=============== Required Packages ===================>>>
 \RequirePackage[T1]{fontenc}
+\RequirePackage{caption}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
 \RequirePackage[pageanchor]{hyperref}
@@ -38,7 +39,7 @@
 
 %>>>========= At Begin Document Deffinitions ============>>>
 \AtBeginDocument{%
-    \renewcommand{\captionfont}{\small}
+    \captionsetup{font=small}
     \pagestyle{frontheadings}
     \parindent2cm
     \onehalfspacing
