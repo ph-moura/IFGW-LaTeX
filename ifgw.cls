@@ -74,44 +74,44 @@
 %<<<=====================================================<<<
 
 %>>>============== Title and Subtitle ===================>>>
-\newcommand{\titlei}{}
-\newcommand{\titleii}{}
+\newcommand{\ifgw@title@eng}{}
+\newcommand{\ifgw@title@pt}{}
 \renewcommand{\title}[2][]{%
-    \renewcommand{\titlei}{{#2}}
-    \ifx\relax#1\relax\else\renewcommand{\titleii}{{#1}}\fi
+    \renewcommand{\ifgw@title@pt}{{#2}}
+    \ifx\relax#1\relax\else\renewcommand{\ifgw@title@eng}{{#1}}\fi
 }
 
 \newcommand{\thetitle}[1][]{%
-    \ifx#12\relax\titleii\else\titlei\fi    
+    \ifx#1e\relax\ifgw@title@eng\else\ifgw@title@pt\fi
 }
 
-\newcommand{\subtitlei}{}
-\newcommand{\subtitleii}{}
+\newcommand{\ifgw@subtitle@eng}{}
+\newcommand{\ifgw@subtitle@pt}{}
 \newcommand{\subtitle}[2][]{%
-    \renewcommand{\subtitlei}{{#2}}
-    \ifx\relax#1\relax\else\renewcommand{\subtitleii}{{#1}}\fi
+    \renewcommand{\ifgw@subtitle@pt}{{#2}}
+    \ifx\relax#1\relax\else\renewcommand{\ifgw@subtitle@eng}{{#1}}\fi
 }
 
 \newcommand{\thesubtitle}[1][]{%
-    \ifx#12\relax\subtitleii\else\subtitlei\fi  
+    \ifx#1e\relax\ifgw@subtitle@eng\else\ifgw@subtitle@eng\fi
 }
 
 \newcommand{\ifgw@page@title}{%
-    \if\relax\titlei\relax
+    \if\relax\ifgw@title@eng\relax
     \else
-        \if\relax\subtitlei\relax
-            \MakeUppercase{\textbf{\titlei}}
+        \if\relax\ifgw@subtitle@eng\relax
+            \MakeUppercase{\textbf{\ifgw@title@eng}}
         \else
-            \MakeUppercase{\textbf{\titlei:}}\\\MakeUppercase{\subtitlei}
+            \MakeUppercase{\textbf{\ifgw@title@eng:}}\\\MakeUppercase{\ifgw@subtitle@eng}
         \fi
         \vfill
     \fi
-    \if\relax\titleii\relax
+    \if\relax\ifgw@title@pt\relax
     \else
-        \if\relax\subtitleii\relax
-            \MakeUppercase{\textbf{\titleii}}
+        \if\relax\ifgw@subtitle@pt\relax
+            \MakeUppercase{\textbf{\ifgw@title@pt}}
         \else
-            \MakeUppercase{\textbf{\titleii:}}\\\MakeUppercase{\subtitleii}
+            \MakeUppercase{\textbf{\ifgw@title@pt:}}\\\MakeUppercase{\ifgw@subtitle@pt}
         \fi
         \vfill
     \fi
@@ -136,15 +136,15 @@
 \newcommand{\thesupervisor}{}
 \newcommand{\supervisorname}{Supervisor}
 \newcommand{\supervisor}[2][Supervisor]{%
-    \renewcommand{\supervisorname}{{#1}}
     \renewcommand{\thesupervisor}{{#2}}
+    \ifx\relax#1\relax\else\renewcommand{\supervisorname}{{#1}}\fi
 }
 
 \newcommand{\thecosupervisor}{}
 \newcommand{\cosupervisorname}{}
 \newcommand{\cosupervisor}[2][Co-supervisor]{%
-    \renewcommand{\cosupervisorname}{{#1}}
     \renewcommand{\thecosupervisor}{{#2}}
+    \ifx\relax#1\relax\else\renewcommand{\cosupervisorname}{{#1}}\fi
 }
 
 \newcommand{\ifgw@page@supervisor}{%
@@ -160,35 +160,35 @@
 %<<<=====================================================<<<
 
 %>>>================== Institution ======================>>>
-\newcommand{\institutei}{}
-\newcommand{\instituteii}{}
+\newcommand{\ifgw@institute@eng}{}
+\newcommand{\ifgw@institute@pt}{}
 \newcommand{\institute}[2][]{%
-    \renewcommand\institutei{{#2}}
-    \renewcommand\instituteii{{#1}}
+    \renewcommand\ifgw@institute@pt{{#2}}
+    \ifx\relax#1\relax\else\renewcommand\ifgw@institute@eng{{#1}}\fi
 }
 
 \newcommand{\theinstitute}[1][]{%
-    \ifx#12\relax\instituteii\else\institutei\fi    
+    \ifx#1e\relax\ifgw@institute@eng\else\ifgw@institute@pt\fi
 }
 
-\newcommand{\universityi}{}
-\newcommand{\universityii}{}
+\newcommand{\ifgw@university@eng}{}
+\newcommand{\ifgw@university@pt}{}
 \newcommand{\university}[2][]{%
-    \renewcommand\universityi{{#2}}
-    \renewcommand\universityii{{#1}}
+    \renewcommand\ifgw@university@pt{{#2}}
+    \ifx\relax#1\relax\else\renewcommand\ifgw@university@eng{{#1}}\fi
 }
 
 \newcommand{\theuniversity}[1][]{%
-    \ifx#12\relax\universityii\else\universityi\fi  
+    \ifx#1e\relax\ifgw@university@eng\else\ifgw@university@pt\fi
 }
 
 \newcommand{\ifgw@page@institution}{%
-    \if\universityi\@empty\relax
+    \if\ifgw@university@pt\@empty\relax
     \else
-        \if\institutei\@empty\relax
-            {\MakeUppercase{\universityi}}
+        \if\ifgw@institute@pt\@empty\relax
+            {\MakeUppercase{\ifgw@university@pt}}
         \else
-            {\MakeUppercase{\universityi}}\\~{\institutei}
+            {\MakeUppercase{\ifgw@university@pt}}\\~{\ifgw@institute@pt}
         \fi
         \vfill
     \fi 
@@ -230,14 +230,14 @@
 %<<<=====================================================<<<
 
 %>>>================== Backcover ========================>>>
-\define@key{backcover}{first text}{\def\ifgw@backcover@first@text{#1}}
-\define@key{backcover}{second text}{\def\ifgw@backcover@second@text{#1}}
-\define@key{backcover}{version text}{\def\ifgw@backcover@version@text{#1}}
+\define@key{backcover}{first declaration}{\def\ifgw@backcover@first@declaration{#1}}
+\define@key{backcover}{second declaration}{\def\ifgw@backcover@second@declaration{#1}}
+\define@key{backcover}{version}{\def\ifgw@backcover@version{#1}}
 
 \setkeys{backcover}{%
-    first text=\@empty,
-    second text=\@empty,
-    version text=\@empty
+    first declaration=\@empty,
+    second declaration=\@empty,
+    version=\@empty
 }
 
 \newcommand{\backcover}[1]{%
@@ -249,15 +249,15 @@
     \hspace*{7.5cm}
     \begin{minipage}{8.5cm}
         \singlespacing
-        \if\ifgw@backcover@first@text\@empty\relax
+        \if\ifgw@backcover@first@declaration\@empty\relax
         \else
-            \ifgw@backcover@first@text
+            \ifgw@backcover@first@declaration
             \vskip\baselineskip
         \fi
-        \if\ifgw@backcover@second@text\@empty
+        \if\ifgw@backcover@second@declaration\@empty
             \relax
         \else
-            \ifgw@backcover@second@text
+            \ifgw@backcover@second@declaration
         \fi
     \end{minipage}
     \vfill
@@ -265,12 +265,12 @@
 %<<<-----------------------------------------------------<<<
 
 %>>>------------- Backcover Version Text ---------------->>>
-\newcommand{\ifgw@page@version@text}{%
+\newcommand{\ifgw@page@version}{%
     \begin{minipage}{8.5cm}
         \singlespacing
-        \if\ifgw@backcover@version@text\@empty\relax
+        \if\ifgw@backcover@version\@empty\relax
         \else
-        \MakeUppercase{\ifgw@backcover@version@text}
+        \MakeUppercase{\ifgw@backcover@version}
         \fi
     \end{minipage}
     \vfill
@@ -307,7 +307,7 @@
         \ifgw@page@text
     \end{center}
     \ifgw@page@supervisor
-    \ifgw@page@version@text
+    \ifgw@page@version
     \begin{center}
         \ifgw@page@city
     \end{center}
