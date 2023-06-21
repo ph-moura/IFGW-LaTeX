@@ -4,6 +4,7 @@
 \usepackage{cite}
 \usepackage{fourier}
 \usepackage{lipsum}
+\usepackage{pdfpages}
 
 \author{Anakin Skywalker}
 \city{Tatooine}
@@ -22,9 +23,13 @@
 \maketitle
 \makebackcover
 
+\includepdf[pages=-]{PDFs/ficha_catalografica}
+\includepdf[pages=-]{PDFs/folha_de_aprovacao}
+
 \dedication{To my son, Luke Skywalker.}
 \epigraph{Master Yoda}{May the Force be with you!}
 
+\include{Chapters/agradecimentos}
 \include{Chapters/resumo}
 \include{Chapters/abstract}
 
