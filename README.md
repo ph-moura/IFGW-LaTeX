@@ -1,22 +1,17 @@
 > Status do Projeto: Em desenvolvimento :warning:
-# IFGW-Unicamp 
+# IFGW-LaTeX
 
 
 > LaTeX class for the Ph.D. thesis
-
 
 ## Table of Contents
 1. [ Description. ](#desc)
 2. [ Instalation. ](#inst)
 3. [ Usage. ](#use)
-	- [ Usefull commands. ](#usfcmd)
-	- [ Some Suggested Packages. ](#sspkg)
-	- [ Handling Figures and Tables.](#hdlf)
-
 
 <a name="desc"></a>
 ## 1. Description
-This is a LaTeX class for the Ph.D. thesis of _"Gleb Wataghin" Institute of Physics_ at the _University of Campinas_.
+This is a LaTeX class for the Ph.D. thesis of _Gleb Wataghin Institute of Physics_ at the _University of Campinas_.
 
 
 <a name="inst"></a>
@@ -31,36 +26,79 @@ To load the class, use the following comand:
 ```Latex
 \documentclass[oneside]{ifgw}
 ```
-By default, the _a4paper_ and _12pt_ are passed. The _[oneside]_ is optional.
-Some macros are defined 
+By default, the _a4paper_ and _12pt_ are passed. The _[oneside]_ is optional. Some macros are defined
 
 ```Latex
-\documentclass[oneside]{phd-thesis}
+\author{}
+\title[]{}
+\subtitle[]{}
+\supervisor[]{}
+\cosupervisor[]{}
+\institute[]{}
+\university[]{}
+\city{}
+\logo[]{}
+\backcover{
+    first declaration={},
+    second declaration={},
+    version={}
+}
+```
 
-\title[Título da tese]{ Title of the thesis}	 
-\author{Paulo H. de Moura}	 
-\supervisor{Name of the Supervisor}	
-\cosupervisor{Name of the Co-supervisor}  % Optional 
-\institute[Nome do Instituto]{Institute Name}	 
-\university[Nome da Universidade]{University Name}	 
-\location{City}	
-\logo{path/to/logo} % Default: align=left, width=2cm  
+These macros set the _author_, _title_, _subtitle_, _supervisor_, _co-supervisor_ (optional), the name of the _Institute_, the name of the _University_, the _city_, the _logo_ and the text for the cover page, respectively.
+
+The _abstract_, _resumo_ and the _acknowledgement_ sections can be done as follows:
+
+```Latex
+\begin{abstract}
+
+\end{abstract}
+
+\begin[name=Resumo]{abstract}
+
+\end{abstract}
+
+\begin[name=Agradecimentos]{abstract}
+
+\end{abstract}
+```
+
+Putting all together:
+
+```Latex
+\documentclass[oneside, 12pt]{ifgw}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{fourier}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+
+\author{Anakin Skywalker}
+\city{Tatooine}
+\cosupervisor[Co-orientador]{Obi-Wan Kenobi}
+\institute[Darth Plagueis Institute]{Instituto Darth Plagueis}
+\logo[align=left]{Images/unicamp.png}
+\supervisor[Orientador]{Master Yoda}
+\title[Star Wars]{Guerra nas estrelas}
+\subtitle[May the Force be with you]{Que a Força esteja com você}
+\university[University of the Galactic Empire]{Universidade do Império Galático}
 
 \backcover{
-	first language={
-		Thesis presented to the \theinstitute~of the \theuniversity~in partial 
-		fulfillment of the requirements for the degree of \uppercase{Master Jedi}, 
-		in the area of \uppercase{Jedi Guardian}.
-	},
-	second language={
-		Tese apresentada ao \theinstitute[2]~da \theuniversity[2]~como parte 
-		dos requisitos exigidos para a obtenção do título de \uppercase{Mestre Jedi}, 
-		na Área de \uppercase{Jedi Guardião}.
-	}, 
-	version text={
-		Este trabalho corresponde à versão final da tese defendida pelo 
-		aluno \theauthor~e orientada pelo Prof. Dr. \thesupervisor.
-	}
+    first declaration={
+        Thesis presented to the \theinstitute[e]~of the \theuniversity[e]~in
+        partial fulfillment of the requirements for the de\-gree of
+        \uppercase{Doctor of Science}, in the area of \uppercase{Physics}.
+    },
+    second declaration={
+        Tese apresentada ao \theinstitute~da \theuniversity~como
+        parte dos requisitos exigidos para a obtenção do título de
+        \uppercase{Doutor em Ciências}, na Área de \uppercase{Física}.
+    },
+    version={
+        Es\-te tra\-ba\-lho cor\-res\-pon\-de à ver\-são fi\-nal da
+        te\-se de\-fen\-di\-da pe\-lo a\-lu\-no \theauthor~e
+        ori\-en\-ta\-da pe\-lo Prof. Dr. \thesupervisor.
+    }
 }
 
 \begin{document}
@@ -68,42 +106,34 @@ Some macros are defined
 \maketitle
 \makebackcover
 
+\includepdf[pages=-]{PDFs/ficha_catalografica}
+\includepdf[pages=-]{PDFs/folha_de_aprovacao}
+
 \dedication{To my son, Luke Skywalker.}
 \epigraph{Master Yoda}{May the Force be with you!}
 
-% Resumo
-\begin{abstract}[name=Resumo]
- Escreva seu resumo aqui.
-\end{abstract}
+\include{Chapters/agradecimentos}
+\include{Chapters/resumo}
+\include{Chapters/abstract}
 
-% Abstract
-\begin{abstract}
- Write your abstract here.
-\end{abstract}
-
-% Sumário
+\listoffigures
+\listoftables
 \tableofcontents
+
+\include{Chapters/ch01}
+\include{Chapters/ch02}
+\include{Chapters/ch03}
+\include{Chapters/ch04}
+\include{Chapters/ch05}
+\include{Chapters/ch06}
+
+\bibliographystyle{naturemag}
+\bibliography{Chapters/StarWars}
+
+\appendix
+\include{Chapters/ch07}
+\include{Chapters/ch08}
+\include{Chapters/ch09}
 
 \end{document}
 ```
-
-These macros set the _title_, the _author_, the _supervisor_, the _co-supervisor_ (optional), the name of the _Institute_, the name of the _University_, the _city_, the _logo_ (optional) and the text for the cover page, respectively. 
-
-<a name="usfcmd"></a>
-### 3.1 Useful commands
-
-
-<a name="sspkg"></a>
-### 3.2 Some Suggested Packages
-The  is provided by the gensymb package, so if you add:
-
-#### gensymb
-To use the ```\degree``` command.
-#### textcomp
-To use the  ```\textdegree``` command. 
-
-<a name="hdlf"></a>
-### 3.3 Handling Figures and Tables
-
-
-
