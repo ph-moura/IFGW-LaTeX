@@ -1,6 +1,6 @@
 # Makefile
 
-PROJ_NAME=sample
+PROJ_NAME=main
 
 TARGET=ifgw.cls
 INSTALLDIR=/usr/share/texmf-dist/tex/latex/
