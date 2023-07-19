@@ -128,7 +128,7 @@ Putting all together:
 \include{Chapters/ch06}
 
 \bibliographystyle{naturemag}
-\bibliography{Chapters/StarWars}
+\bibliography{Chapters/Bibliografia}
 
 \appendix
 \include{Chapters/ch07}
