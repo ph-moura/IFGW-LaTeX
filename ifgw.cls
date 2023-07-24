@@ -128,7 +128,7 @@
     \ifx#1e\relax\ifgw@subtitle@eng\else\ifgw@subtitle@eng\fi
 }
 
-\newcommand{\ifgw@page@title}{%
+\newcommand{\ifgw@page@title@eng}{%
     \if\relax\ifgw@title@eng\relax
     \else
         \if\relax\ifgw@subtitle@eng\relax
@@ -138,6 +138,9 @@
         \fi
         \vfill
     \fi
+}
+
+\newcommand{\ifgw@page@title@pt}{%
     \if\relax\ifgw@title@pt\relax
     \else
         \if\relax\ifgw@subtitle@pt\relax
@@ -147,7 +150,6 @@
         \fi
         \vfill
     \fi
-    \vfill
 }
 %<<<=====================================================<<<
 
@@ -265,16 +267,20 @@
 \define@key{backcover}{first declaration}{\def\ifgw@backcover@first@declaration{#1}}
 \define@key{backcover}{second declaration}{\def\ifgw@backcover@second@declaration{#1}}
 \define@key{backcover}{version}{\def\ifgw@backcover@version{#1}}
-
+\define@key{backcover}{language}{\def\ifgw@backcover@language{#1}}
 \setkeys{backcover}{%
     first declaration=\@empty,
     second declaration=\@empty,
-    version=\@empty
+    version=\@empty,
+    language=\@empty
 }
 
 \newcommand{\backcover}[1]{%
     \setkeys{backcover}{#1}
 }
+
+\def\ifgw@language@pt{portuguese}
+\def\ifgw@language@eng{english}
 
 %>>>--------------- Backcover Text ---------------------->>>
 \newcommand{\ifgw@page@text}{%
@@ -286,10 +292,14 @@
             \ifgw@backcover@first@declaration
             \vskip\baselineskip
         \fi
-        \if\ifgw@backcover@second@declaration\@empty
+        \ifx\ifgw@language@pt\ifgw@backcover@language
             \relax
         \else
-            \ifgw@backcover@second@declaration
+            \if\ifgw@backcover@second@declaration\@empty
+                \relax
+            \else
+                \ifgw@backcover@second@declaration
+            \fi
         \fi
     \end{minipage}
     \vfill
@@ -321,7 +331,8 @@
     \begin{center}
         \ifgw@page@institution
         \ifgw@page@author
-        \ifgw@page@title
+        \ifgw@page@title@pt
+        \ifgw@page@title@eng
         \vfill
         \ifgw@page@city
     \end{center}
@@ -335,7 +346,11 @@
     \thispagestyle{empty}
     \begin{center}
         \ifgw@page@author
-        \ifgw@page@title
+        \ifx\ifgw@language@pt\ifgw@backcover@language\relax
+        \else
+            \ifgw@page@title@eng
+        \fi
+        \ifgw@page@title@pt
         \ifgw@page@text
     \end{center}
     \ifgw@page@supervisor
