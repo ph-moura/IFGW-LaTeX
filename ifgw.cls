@@ -494,7 +494,12 @@
     \begin{flushright}
         \begin{minipage}{8.5cm}
             {\it #2}\\
-            {\hspace*{\fill}\it#1}
+            {%
+                \if\relax#1\relax
+                \else
+                    \hspace*{\fill}\it(#1)
+                \fi
+            }%
         \end{minipage}
     \end{flushright}
     \break\newpage
