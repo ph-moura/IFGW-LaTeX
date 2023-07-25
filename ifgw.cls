@@ -36,7 +36,7 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions
-\LoadClass[a4paper, 12pt]{book}
+\LoadClass[a4paper, oneside, 12pt]{book}
 
 %>>>=============== Required Packages ===================>>>
 \RequirePackage[T1]{fontenc}
