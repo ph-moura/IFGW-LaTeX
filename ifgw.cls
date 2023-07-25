@@ -264,13 +264,13 @@
 %<<<=====================================================<<<
 
 %>>>================== Backcover ========================>>>
-\define@key{backcover}{first declaration}{\def\ifgw@backcover@first@declaration{#1}}
-\define@key{backcover}{second declaration}{\def\ifgw@backcover@second@declaration{#1}}
+\define@key{backcover}{portuguese declaration}{\def\ifgw@backcover@portuguese@declaration{#1}}
+\define@key{backcover}{english declaration}{\def\ifgw@backcover@english@declaration{#1}}
 \define@key{backcover}{version}{\def\ifgw@backcover@version{#1}}
 \define@key{backcover}{language}{\def\ifgw@backcover@language{#1}}
 \setkeys{backcover}{%
-    first declaration=\@empty,
-    second declaration=\@empty,
+    portuguese declaration=\@empty,
+    english declaration=\@empty,
     version=\@empty,
     language=\@empty
 }
@@ -287,18 +287,18 @@
     \hspace*{7.5cm}
     \begin{minipage}{8.5cm}
         \singlespacing
-        \if\ifgw@backcover@first@declaration\@empty\relax
+        \if\ifgw@backcover@portuguese@declaration\@empty\relax
         \else
-            \ifgw@backcover@first@declaration
+            \ifgw@backcover@portuguese@declaration
             \vskip\baselineskip
         \fi
         \ifx\ifgw@language@pt\ifgw@backcover@language
             \relax
         \else
-            \if\ifgw@backcover@second@declaration\@empty
+            \if\ifgw@backcover@english@declaration\@empty
                 \relax
             \else
-                \ifgw@backcover@second@declaration
+                \ifgw@backcover@english@declaration
             \fi
         \fi
     \end{minipage}
