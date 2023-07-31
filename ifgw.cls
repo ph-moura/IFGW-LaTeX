@@ -70,7 +70,7 @@
 
 %>>>========= At Begin Document Deffinitions ============>>>
 \AtBeginDocument{%
-    \captionsetup{font=small}
+    \captionsetup{font={footnotesize, singlespacing}}
     \pagestyle{frontheadings}
     \parindent2cm
     \onehalfspacing
@@ -382,6 +382,7 @@
 \def\ps@headings{%
     \def\@evenhead{%
         \parbox{\textwidth}{%
+            \footnotesize
             \thepage
             \hfill
             \rightmark 
@@ -393,6 +394,7 @@
 
     \def\@oddhead{%
         \parbox{\textwidth}{%
+            \footnotesize
             \leftmark
             \hfill
             \thepage 
@@ -408,16 +410,14 @@
 
 \def\ps@plain{%
     \let\@oddfoot\@empty\let\@evenfoot\@empty
-    \def\@oddhead{{\hfill\thepage}}
-    \def\@evenhead{{\thepage\hfill}}
+    \def\@oddhead{{\footnotesize\hfill\thepage}}
+    \def\@evenhead{{\footnotesize\thepage\hfill}}
 }
 
 \def\ps@myheadings{\ps@headings}
 
 \def\ps@frontheadings{%
     \let\@oddhead\@empty\let\@evenhead\@empty
-    \def\@oddfoot{{\hfil\thepage\hfil}}
-    \def\@evenfoot{{\hfil\thepage\hfil}}
 }
 
 \def\ps@frontheadings{\ps@empty}
