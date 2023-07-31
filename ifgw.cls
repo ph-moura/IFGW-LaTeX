@@ -108,8 +108,8 @@
 \define@key{title}{portuguese}{\def\ifgw@title@portuguese{#1}}
 \define@key{title}{english}{\def\ifgw@title@english{#1}}
 \setkeys{title}{%
-    portuguese=\@empty,
-    english=\@empty,
+    portuguese={},
+    english={},
 }
 
 \renewcommand{\title}[1]{%
@@ -123,8 +123,8 @@
 \define@key{subtitle}{portuguese}{\def\ifgw@subtitle@portuguese{#1}}
 \define@key{subtitle}{english}{\def\ifgw@subtitle@english{#1}}
 \setkeys{subtitle}{%
-    portuguese=\@empty,
-    english=\@empty,
+    portuguese={},
+    english={},
 }
 
 \newcommand{\subtitle}[1]{%
@@ -204,8 +204,8 @@
 \define@key{institute}{portuguese}{\def\ifgw@institute@portuguese{#1}}
 \define@key{institute}{english}{\def\ifgw@institute@english{#1}}
 \setkeys{institute}{%
-    portuguese=\@empty,
-    english=\@empty,
+    portuguese={},
+    english={},
 }
 
 \newcommand{\institute}[1]{%
@@ -220,8 +220,8 @@
 \define@key{university}{english}{\def\ifgw@university@english{#1}}
 \define@key{university}{spanish}{\def\ifgw@university@spanish{#1}}
 \setkeys{university}{%
-    portuguese=\@empty,
-    english=\@empty,
+    portuguese={},
+    english={},
 }
 
 \newcommand{\university}[1]{%
@@ -285,10 +285,10 @@
 \define@key{backcover}{version}{\def\ifgw@backcover@version{#1}}
 \define@key{backcover}{language}{\def\ifgw@backcover@language{#1}}
 \setkeys{backcover}{%
-    portuguese declaration=\@empty,
-    english declaration=\@empty,
-    version=\@empty,
-    language=\@empty
+    portuguese declaration={},
+    english declaration={},
+    version={},
+    language={}
 }
 
 \newcommand{\backcover}[1]{%
@@ -487,7 +487,7 @@
 %>>>================== Abstract =========================>>>
 \define@key{abstract}{header}{\def\ifgw@abstract@header{#1}}
 \define@key{abstract}{name}{\def\ifgw@abstract@name{#1}}
-\setkeys{abstract}{name=Abstract, header=\@empty}
+\setkeys{abstract}{name=Abstract, header={}}
 
 \newenvironment{abstract}[1][]{%
     \setkeys{abstract}{#1}
