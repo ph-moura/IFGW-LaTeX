@@ -82,7 +82,10 @@
 \renewcommand{\bibliography}[1]{%
     \cleardoublepage
     \thispagestyle{plain}
-    \oldbibliography{#1}
+    \begingroup
+        \setstretch{1}
+        \oldbibliography{#1}
+    \endgroup
     \addcontentsline{toc}{chapter}{\bfseries\scshape\bibname}
     \markboth{\bibname}{\bibname}
 }
