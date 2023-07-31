@@ -504,6 +504,19 @@
 {\newpage}
 %<<<=====================================================<<<
 
+%>>>================= Long Citation =====================>>>
+\newenvironment{longcitation}[1][]{%
+    \noindent
+    \hspace{4cm}
+    \begin{minipage}{12cm}
+    \singlespacing\footnotesize
+}
+{%
+    \end{minipage}
+    \vskip\baselineskip%
+}
+%<<<=====================================================<<<
+
 %>>>==================== Epigraph =======================>>>
 \newcommand{\epigraph}[2]{%
     \cleardoublepage
