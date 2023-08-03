@@ -70,7 +70,7 @@
 
 %>>>========= At Begin Document Deffinitions ============>>>
 \AtBeginDocument{%
-    \captionsetup{font=small}
+    \captionsetup{font={footnotesize, singlespacing}}
     \pagestyle{frontheadings}
     \parindent2cm
     \onehalfspacing
@@ -105,47 +105,55 @@
 %<<<=====================================================<<<
 
 %>>>============== Title and Subtitle ===================>>>
-\newcommand{\ifgw@title@eng}{}
-\newcommand{\ifgw@title@pt}{}
-\renewcommand{\title}[2][]{%
-    \renewcommand{\ifgw@title@pt}{{#2}}
-    \ifx\relax#1\relax\else\renewcommand{\ifgw@title@eng}{{#1}}\fi
+\define@key{title}{portuguese}{\def\ifgw@title@portuguese{#1}}
+\define@key{title}{english}{\def\ifgw@title@english{#1}}
+\setkeys{title}{%
+    portuguese={},
+    english={},
+}
+
+\renewcommand{\title}[1]{%
+    \setkeys{title}{#1}
 }
 
 \newcommand{\thetitle}[1][]{%
-    \ifx#1e\relax\ifgw@title@eng\else\ifgw@title@pt\fi
+    \ifx#1e\relax\ifgw@title@englishlish\else\ifgw@title@portuguese\fi
 }
 
-\newcommand{\ifgw@subtitle@eng}{}
-\newcommand{\ifgw@subtitle@pt}{}
-\newcommand{\subtitle}[2][]{%
-    \renewcommand{\ifgw@subtitle@pt}{{#2}}
-    \ifx\relax#1\relax\else\renewcommand{\ifgw@subtitle@eng}{{#1}}\fi
+\define@key{subtitle}{portuguese}{\def\ifgw@subtitle@portuguese{#1}}
+\define@key{subtitle}{english}{\def\ifgw@subtitle@english{#1}}
+\setkeys{subtitle}{%
+    portuguese={},
+    english={},
+}
+
+\newcommand{\subtitle}[1]{%
+    \setkeys{subtitle}{#1}
 }
 
 \newcommand{\thesubtitle}[1][]{%
-    \ifx#1e\relax\ifgw@subtitle@eng\else\ifgw@subtitle@eng\fi
+    \ifx#1e\relax\ifgw@subtitle@english\else\ifgw@subtitle@english\fi
 }
 
 \newcommand{\ifgw@page@title@eng}{%
-    \if\relax\ifgw@title@eng\relax
+    \ifx\ifgw@title@english\@empty\relax
     \else
-        \if\relax\ifgw@subtitle@eng\relax
-            \MakeUppercase{\textbf{\ifgw@title@eng}}
+        \ifx\ifgw@subtitle@english\@empty\relax
+            \MakeUppercase{\textbf{\ifgw@title@english}}
         \else
-            \MakeUppercase{\textbf{\ifgw@title@eng:}}\\\MakeUppercase{\ifgw@subtitle@eng}
+            \MakeUppercase{\textbf{\ifgw@title@english:}}\\\MakeUppercase{\ifgw@subtitle@english}
         \fi
         \vfill
     \fi
 }
 
 \newcommand{\ifgw@page@title@pt}{%
-    \if\relax\ifgw@title@pt\relax
+    \ifx\ifgw@title@portuguese\@empty\relax
     \else
-        \if\relax\ifgw@subtitle@pt\relax
-            \MakeUppercase{\textbf{\ifgw@title@pt}}
+        \ifx\ifgw@subtitle@portuguese\@empty\relax
+            \MakeUppercase{\textbf{\ifgw@title@portuguese}}
         \else
-            \MakeUppercase{\textbf{\ifgw@title@pt:}}\\\MakeUppercase{\ifgw@subtitle@pt}
+            \MakeUppercase{\textbf{\ifgw@title@portuguese:}}\\\MakeUppercase{\ifgw@subtitle@portuguese}
         \fi
         \vfill
     \fi
@@ -193,35 +201,44 @@
 %<<<=====================================================<<<
 
 %>>>================== Institution ======================>>>
-\newcommand{\ifgw@institute@eng}{}
-\newcommand{\ifgw@institute@pt}{}
-\newcommand{\institute}[2][]{%
-    \renewcommand\ifgw@institute@pt{{#2}}
-    \ifx\relax#1\relax\else\renewcommand\ifgw@institute@eng{{#1}}\fi
+\define@key{institute}{portuguese}{\def\ifgw@institute@portuguese{#1}}
+\define@key{institute}{english}{\def\ifgw@institute@english{#1}}
+\setkeys{institute}{%
+    portuguese={},
+    english={},
+}
+
+\newcommand{\institute}[1]{%
+    \setkeys{institute}{#1}
 }
 
 \newcommand{\theinstitute}[1][]{%
-    \ifx#1e\relax\ifgw@institute@eng\else\ifgw@institute@pt\fi
+    \ifx#1e\relax\ifgw@institute@english\else\ifgw@institute@portuguese\fi
 }
 
-\newcommand{\ifgw@university@eng}{}
-\newcommand{\ifgw@university@pt}{}
-\newcommand{\university}[2][]{%
-    \renewcommand\ifgw@university@pt{{#2}}
-    \ifx\relax#1\relax\else\renewcommand\ifgw@university@eng{{#1}}\fi
+\define@key{university}{portuguese}{\def\ifgw@university@portuguese{#1}}
+\define@key{university}{english}{\def\ifgw@university@english{#1}}
+\define@key{university}{spanish}{\def\ifgw@university@spanish{#1}}
+\setkeys{university}{%
+    portuguese={},
+    english={},
+}
+
+\newcommand{\university}[1]{%
+    \setkeys{university}{#1}
 }
 
 \newcommand{\theuniversity}[1][]{%
-    \ifx#1e\relax\ifgw@university@eng\else\ifgw@university@pt\fi
+    \ifx#1e\relax\ifgw@university@english\else\ifgw@university@portuguese\fi
 }
 
 \newcommand{\ifgw@page@institution}{%
-    \if\ifgw@university@pt\@empty\relax
+    \if\ifgw@university@portuguese\@empty\relax
     \else
-        \if\ifgw@institute@pt\@empty\relax
-            {\MakeUppercase{\ifgw@university@pt}}
+        \if\ifgw@institute@portuguese\@empty\relax
+            {\MakeUppercase{\ifgw@university@portuguese}}
         \else
-            {\MakeUppercase{\ifgw@university@pt}}\\~{\ifgw@institute@pt}
+            {\MakeUppercase{\ifgw@university@portuguese}}\\~{\ifgw@institute@portuguese}
         \fi
         \vfill
     \fi 
@@ -268,10 +285,10 @@
 \define@key{backcover}{version}{\def\ifgw@backcover@version{#1}}
 \define@key{backcover}{language}{\def\ifgw@backcover@language{#1}}
 \setkeys{backcover}{%
-    portuguese declaration=\@empty,
-    english declaration=\@empty,
-    version=\@empty,
-    language=\@empty
+    portuguese declaration={},
+    english declaration={},
+    version={},
+    language={}
 }
 
 \newcommand{\backcover}[1]{%
@@ -365,6 +382,7 @@
 \def\ps@headings{%
     \def\@evenhead{%
         \parbox{\textwidth}{%
+            \footnotesize
             \thepage
             \hfill
             \rightmark 
@@ -376,6 +394,7 @@
 
     \def\@oddhead{%
         \parbox{\textwidth}{%
+            \footnotesize
             \leftmark
             \hfill
             \thepage 
@@ -391,16 +410,14 @@
 
 \def\ps@plain{%
     \let\@oddfoot\@empty\let\@evenfoot\@empty
-    \def\@oddhead{{\hfill\thepage}}
-    \def\@evenhead{{\thepage\hfill}}
+    \def\@oddhead{{\footnotesize\hfill\thepage}}
+    \def\@evenhead{{\footnotesize\thepage\hfill}}
 }
 
 \def\ps@myheadings{\ps@headings}
 
 \def\ps@frontheadings{%
     \let\@oddhead\@empty\let\@evenhead\@empty
-    \def\@oddfoot{{\hfil\thepage\hfil}}
-    \def\@evenfoot{{\hfil\thepage\hfil}}
 }
 
 \def\ps@frontheadings{\ps@empty}
@@ -470,7 +487,7 @@
 %>>>================== Abstract =========================>>>
 \define@key{abstract}{header}{\def\ifgw@abstract@header{#1}}
 \define@key{abstract}{name}{\def\ifgw@abstract@name{#1}}
-\setkeys{abstract}{name=Abstract, header=\@empty}
+\setkeys{abstract}{name=Abstract, header={}}
 
 \newenvironment{abstract}[1][]{%
     \setkeys{abstract}{#1}
@@ -485,6 +502,19 @@
 }
     \onehalfspacing
 {\newpage}
+%<<<=====================================================<<<
+
+%>>>================= Long Citation =====================>>>
+\newenvironment{longcitation}[1][]{%
+    \noindent
+    \hspace{4cm}
+    \begin{minipage}{12cm}
+    \singlespacing\footnotesize
+}
+{%
+    \end{minipage}
+    \vskip\baselineskip%
+}
 %<<<=====================================================<<<
 
 %>>>==================== Epigraph =======================>>>
