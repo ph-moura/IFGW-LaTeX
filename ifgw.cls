@@ -77,7 +77,6 @@
 }
 %<<<=====================================================<<<
 
-
 %>>>================== Bibliography =====================>>>
 \let\oldbibliography\bibliography
 \renewcommand{\bibliography}[1]{%
@@ -442,6 +441,15 @@
 }
 %<<<=====================================================<<<
 
+%>>>=================== Appendix ========================>>>
+\newif\ifinappendix
+\let\oldappendix\appendix
+\renewcommand{\appendix}{%
+  \oldappendix%
+  \inappendixtrue%
+}
+%<<<=====================================================<<<
+
 %>>>=================== Chapter =========================>>>
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
@@ -460,16 +468,29 @@
     \refstepcounter{chapter}
     \def\chtext{#1}
     \ifx\chtext\@empty\relax\renewcommand{\chtext}{#2}\fi
-    \addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}
     \@mkboth{\thechapter.~\chtext}{}
     \begingroup
-        \selectfont\huge\scshape\noindent\@chapapp~\thechapter
-        \vskip\baselineskip
-        \linespread{1.5}\noindent{\bfseries#2}
-        \vskip5\p@
-        \noindent\rule{\textwidth}{\chapterrulewidth}
+        \noindent
+        \selectfont\huge\scshape\bfseries
+        \ifinappendix
+            \addcontentsline{toc}{chapter}{\scshape\bfseries\appendixname~\thechapter.~#2}%
+            \parbox[t]{\textwidth}{
+                \appendixname~\thechapter~-~#2
+                \newline
+                \rule{\textwidth}{\chapterrulewidth}%
+            }
+        \else
+            \addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}%
+            \thechapter~~%
+            \parbox[t]{15cm}{
+                #2%
+                \newline%
+                \hspace*{-0.75cm}%
+                \rule{\textwidth}{\chapterrulewidth}%
+            }%
+        \fi
     \endgroup
-    \vskip 35\p@
+    \vskip 25\p@
     \par
 }
 
