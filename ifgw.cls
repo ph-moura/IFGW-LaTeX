@@ -349,8 +349,8 @@
     \begin{center}
         \ifgw@page@institution
         \ifgw@page@author
-        \ifgw@page@title@pt
         \ifgw@page@title@eng
+        \ifgw@page@title@pt
         \vfill
         \ifgw@page@city
     \end{center}
