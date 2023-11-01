@@ -43,7 +43,7 @@
 \RequirePackage{caption}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
-\RequirePackage[pageanchor]{hyperref}
+\RequirePackage[pageanchor, hyperfootnotes=false]{hyperref}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
