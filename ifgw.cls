@@ -468,30 +468,27 @@
     \refstepcounter{chapter}
     \def\chtext{#1}
     \ifx\chtext\@empty\relax\renewcommand{\chtext}{#2}\fi
-    \@mkboth{\thechapter.~\chtext}{}
+    \ifinappendix
+        \addcontentsline{toc}{chapter}{\scshape\bfseries\appendixname~\thechapter.~#2}%
+        \@mkboth{\appendixname~\thechapter~-~\chtext}{}%
+    \else
+        \addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}%
+        \@mkboth{\thechapter.~\chtext}{}%
+    \fi
     \begingroup
-        \noindent
-        \selectfont\huge\scshape\bfseries
+        \noindent%
+        \selectfont\LARGE\scshape\bfseries
         \ifinappendix
-            \addcontentsline{toc}{chapter}{\scshape\bfseries\appendixname~\thechapter.~#2}%
-            \parbox[t]{\textwidth}{
-                \appendixname~\thechapter~-~#2
-                \newline
-                \rule{\textwidth}{\chapterrulewidth}%
-            }
+            \appendixname~\thechapter~-~\parbox[t]{11.5cm}{#2\newline}%
         \else
-            \addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}%
-            \thechapter~~%
-            \parbox[t]{15cm}{
-                #2%
-                \newline%
-                \hspace*{-0.75cm}%
-                \rule{\textwidth}{\chapterrulewidth}%
-            }%
+            \thechapter~~\parbox[t]{14.5cm}{#2\newline}%
         \fi
     \endgroup
-    \vskip 25\p@
-    \par
+    \vspace{-0.5\baselineskip}%
+    \newline%
+    \parbox[t]{\textwidth}{\rule{\textwidth}{\chapterrulewidth}}%
+    \vskip 2\baselineskip%
+    \par%
 }
 
 \newcounter{chapterstar}
@@ -499,7 +496,7 @@
     \cleardoublepage
     \@mkboth{}{}
     \begingroup
-        \selectfont\huge\bfseries\scshape
+        \selectfont\LARGE\bfseries\scshape
         \linespread{1.5}\noindent#1
     \endgroup
     \refstepcounter{chapterstar}
