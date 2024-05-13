@@ -141,9 +141,9 @@
     \ifx\ifgw@title@english\@empty\relax
     \else
         \ifx\ifgw@subtitle@english\@empty\relax
-            \MakeUppercase{\textbf{\ifgw@title@english}}
+            {\textbf{\large\ifgw@title@english}}
         \else
-            \MakeUppercase{\textbf{\ifgw@title@english:}}\\\MakeUppercase{\ifgw@subtitle@english}
+            {\textbf{\large\ifgw@title@english:}}\\{\large\ifgw@subtitle@english}
         \fi
         \vfill
     \fi
@@ -153,9 +153,9 @@
     \ifx\ifgw@title@portuguese\@empty\relax
     \else
         \ifx\ifgw@subtitle@portuguese\@empty\relax
-            \MakeUppercase{\textbf{\ifgw@title@portuguese}}
+            {\textbf{\large\ifgw@title@portuguese}}
         \else
-            \MakeUppercase{\textbf{\ifgw@title@portuguese:}}\\\MakeUppercase{\ifgw@subtitle@portuguese}
+            {\textbf{\large\ifgw@title@portuguese:}}\\{\large\ifgw@subtitle@portuguese}
         \fi
         \vfill
     \fi
@@ -256,7 +256,7 @@
 \newcommand{\theyear}{\the\year}
 
 \newcommand{\ifgw@page@city}{%
-    \if\thecity\@empty\relax\else\MakeUppercase{\thecity\\\the\year}\fi
+    \if\thecity\@empty\relax\else\MakeUppercase{\thecity\\\theyear}\fi
 }
 %<<<=====================================================<<<
 
@@ -349,8 +349,8 @@
     \begin{center}
         \ifgw@page@institution
         \ifgw@page@author
-        \ifgw@page@title@eng
         \ifgw@page@title@pt
+        \ifgw@page@title@eng
         \vfill
         \ifgw@page@city
     \end{center}
@@ -502,6 +502,12 @@
     \refstepcounter{chapterstar}
     \vskip 30\p@
     \par
+}
+
+\newcommand{\plainchapter}[1]{
+    \chapter*{#1}
+    \thispagestyle{plain}
+    \pagestyle{headings}
 }
 %<<<=====================================================<<<
 
