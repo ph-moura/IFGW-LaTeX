@@ -43,7 +43,7 @@
 \RequirePackage{caption}
 \RequirePackage{geometry}
 \RequirePackage{graphicx}
-\RequirePackage[pageanchor]{hyperref}
+\RequirePackage[pageanchor, hyperfootnotes=false]{hyperref}
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
@@ -76,7 +76,6 @@
     \onehalfspacing
 }
 %<<<=====================================================<<<
-
 
 %>>>================== Bibliography =====================>>>
 \let\oldbibliography\bibliography
@@ -142,9 +141,9 @@
     \ifx\ifgw@title@english\@empty\relax
     \else
         \ifx\ifgw@subtitle@english\@empty\relax
-            \MakeUppercase{\textbf{\ifgw@title@english}}
+            {\textbf{\large\ifgw@title@english}}
         \else
-            \MakeUppercase{\textbf{\ifgw@title@english:}}\\\MakeUppercase{\ifgw@subtitle@english}
+            {\textbf{\large\ifgw@title@english:}}\\{\large\ifgw@subtitle@english}
         \fi
         \vfill
     \fi
@@ -154,9 +153,9 @@
     \ifx\ifgw@title@portuguese\@empty\relax
     \else
         \ifx\ifgw@subtitle@portuguese\@empty\relax
-            \MakeUppercase{\textbf{\ifgw@title@portuguese}}
+            {\textbf{\large\ifgw@title@portuguese}}
         \else
-            \MakeUppercase{\textbf{\ifgw@title@portuguese:}}\\\MakeUppercase{\ifgw@subtitle@portuguese}
+            {\textbf{\large\ifgw@title@portuguese:}}\\{\large\ifgw@subtitle@portuguese}
         \fi
         \vfill
     \fi
@@ -257,7 +256,7 @@
 \newcommand{\theyear}{\the\year}
 
 \newcommand{\ifgw@page@city}{%
-    \if\thecity\@empty\relax\else\MakeUppercase{\thecity\\\the\year}\fi
+    \if\thecity\@empty\relax\else\MakeUppercase{\thecity\\\theyear}\fi
 }
 %<<<=====================================================<<<
 
@@ -442,6 +441,15 @@
 }
 %<<<=====================================================<<<
 
+%>>>=================== Appendix ========================>>>
+\newif\ifinappendix
+\let\oldappendix\appendix
+\renewcommand{\appendix}{%
+  \oldappendix%
+  \inappendixtrue%
+}
+%<<<=====================================================<<<
+
 %>>>=================== Chapter =========================>>>
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}{}}
@@ -460,17 +468,27 @@
     \refstepcounter{chapter}
     \def\chtext{#1}
     \ifx\chtext\@empty\relax\renewcommand{\chtext}{#2}\fi
-    \addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}
-    \@mkboth{\thechapter.~\chtext}{}
+    \ifinappendix
+        \addcontentsline{toc}{chapter}{\scshape\bfseries\appendixname~\thechapter.~#2}%
+        \@mkboth{\appendixname~\thechapter~-~\chtext}{}%
+    \else
+        \addcontentsline{toc}{chapter}{\scshape\bfseries\thechapter.~#2}%
+        \@mkboth{\thechapter.~\chtext}{}%
+    \fi
     \begingroup
-        \selectfont\huge\scshape\noindent\@chapapp~\thechapter
-        \vskip\baselineskip
-        \linespread{1.5}\noindent{\bfseries#2}
-        \vskip5\p@
-        \noindent\rule{\textwidth}{\chapterrulewidth}
+        \noindent%
+        \selectfont\LARGE\scshape\bfseries
+        \ifinappendix
+            \appendixname~\thechapter~-~\parbox[t]{11.5cm}{#2\newline}%
+        \else
+            \thechapter~~\parbox[t]{14.5cm}{#2\newline}%
+        \fi
     \endgroup
-    \vskip 35\p@
-    \par
+    \vspace{-0.5\baselineskip}%
+    \newline%
+    \parbox[t]{\textwidth}{\rule{\textwidth}{\chapterrulewidth}}%
+    \vskip 2\baselineskip%
+    \par%
 }
 
 \newcounter{chapterstar}
@@ -478,12 +496,18 @@
     \cleardoublepage
     \@mkboth{}{}
     \begingroup
-        \selectfont\huge\bfseries\scshape
+        \selectfont\LARGE\bfseries\scshape
         \linespread{1.5}\noindent#1
     \endgroup
     \refstepcounter{chapterstar}
     \vskip 30\p@
     \par
+}
+
+\newcommand{\plainchapter}[1]{
+    \chapter*{#1}
+    \thispagestyle{plain}
+    \pagestyle{headings}
 }
 %<<<=====================================================<<<
 
