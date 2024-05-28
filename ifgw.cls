@@ -47,6 +47,7 @@
 \RequirePackage{setspace}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
+\RequirePackage{notoccite}
 %<<<=====================================================<<<
 
 %>>>=============== Page Layout =========================>>>
