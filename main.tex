@@ -14,7 +14,7 @@
 % The Current Maintainer of this work is Paulo Henrique De Moura
 %
 % This work consists of the files ifgw.cls and main.tex
-%% Copyright 2005 Paulo Henrique De Moura
+%% Copyright 2021 Paulo Henrique De Moura
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
