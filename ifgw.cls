@@ -62,7 +62,7 @@
 %>>>================ hypersetup =========================>>>
 \hypersetup{%
     colorlinks=true,
-    linkcolor=blue!75!green,
+    linkcolor=black,
     filecolor=magenta,
     citecolor=green!60!blue,
     urlcolor=cyan,
