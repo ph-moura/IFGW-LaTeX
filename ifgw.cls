@@ -62,7 +62,7 @@
 %>>>================ hypersetup =========================>>>
 \hypersetup{%
     colorlinks=true,
-    linkcolor=blue!75!green,
+    linkcolor=black,
     filecolor=magenta,
     citecolor=green!60!blue,
     urlcolor=cyan,
@@ -306,11 +306,6 @@
     \hspace*{7.5cm}
     \begin{minipage}{8.5cm}
         \singlespacing
-        \if\ifgw@backcover@portuguese@declaration\@empty\relax
-        \else
-            \ifgw@backcover@portuguese@declaration
-            \vskip\baselineskip
-        \fi
         \ifx\ifgw@language@pt\ifgw@backcover@language
             \relax
         \else
@@ -318,7 +313,12 @@
                 \relax
             \else
                 \ifgw@backcover@english@declaration
+                \vskip\baselineskip
             \fi
+        \fi
+        \if\ifgw@backcover@portuguese@declaration\@empty\relax
+        \else
+            \ifgw@backcover@portuguese@declaration
         \fi
     \end{minipage}
     \vfill
