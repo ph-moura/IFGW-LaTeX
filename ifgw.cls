@@ -510,6 +510,11 @@
     \thispagestyle{plain}
     \pagestyle{headings}
 }
+
+\newcommand{\introduction}[1]{%
+    \plainchapter{#1}
+    \addcontentsline{toc}{chapter}{#1}
+}
 %<<<=====================================================<<<
 
 %>>>================== Abstract =========================>>>
