@@ -513,7 +513,7 @@
 
 \newcommand{\introduction}[1]{%
     \plainchapter{#1}
-    \addcontentsline{toc}{chapter}{#1}
+    \addcontentsline{toc}{chapter}{\scshape\bfseries~#1}
 }
 %<<<=====================================================<<<
 
